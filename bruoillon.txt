@@ -1,0 +1,2 @@
+
+            <Avatar mr={5} src={`http://localhost:8000/storage/${avatar}`} />
