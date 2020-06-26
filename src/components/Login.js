@@ -81,7 +81,7 @@ const Login = (props) => {
                   // console.log("test");
                   // console.log(res);
                   if (res && res.status == 200) {
-                    console.log("test");
+                  
 
                     // res.data.status == 401
                     // <Redirect to="/" />;
@@ -96,7 +96,7 @@ const Login = (props) => {
                     setShowAlert(true);
                     setErrors({ msg: " Invalid credentials!! " });
                   } else if (res && res.status == 500) {
-                    console.log("ee");
+                    
                     setShowAlert(true);
                     setErrors({ msg: " Error connection " });
                     // console.log(res);

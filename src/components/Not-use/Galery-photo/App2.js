@@ -1,11 +1,6 @@
 import React from "react";
-import { ThemeProvider } from "@chakra-ui/core";
-import { AppContainer } from "./AppContainer";
+import { Box } from "@chakra-ui/core";
 
 export const App2 = () => {
-  return (
-    <ThemeProvider>
-      <AppContainer />
-    </ThemeProvider>
-  );
+  return <Box mt="150px">test</Box>;
 };

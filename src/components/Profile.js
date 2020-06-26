@@ -21,14 +21,16 @@ const Profile = (props) => {
   useEffect(() => {
     profile().then((res) => {
       // console.log(res.status);
-      if (res.status != 200) {
+      if (!res) {
         console.log(res);
         props.history.push("/login");
-      } else {
+      } else if (localStorage.getItem("userToken")) {
         setStatus(true);
         setName(res.data.success.name);
         setAvatar(res.data.success.avatar);
         // console.log(res.data.success.avatar);
+      } else if (res && res.status == 401) {
+        props.history.push("/login");
       }
       // console.log(res.data.success.name);
     });

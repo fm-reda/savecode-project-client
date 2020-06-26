@@ -8,10 +8,14 @@ import {
   Button,
   ButtonGroup,
   Heading,
+  Flex,
 } from "@chakra-ui/core";
-import { Test } from "./Not-use/Test";
-import illus1 from "./../images/illustration/professor.png";
 
+import illus1 from "./../images/Back-ground/journey-laravel.svg";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import "../App.css";
+const MotionBox = motion.custom(Box);
 function Landing(props) {
   const { loggedInStatus } = props;
   // console.log(loggedInStatus);
@@ -29,55 +33,153 @@ function Landing(props) {
   };
 
   return (
-    <Stack spacing={3}>
-      {/* <Test /> */}
+    <Stack spacing={3} className="bg-started">
+      {/* //container */}
       <Box
-        bgImage={`url('${illus1}')`}
-        bgPos="center"
-        bgSize="30%"
-        bgRepeat="no-repeat"
-        mt="80px"
-        p={5}
-        fontSize="50px"
-        color="white"
-        shadow="md"
-        bg="#288"
-        borderWidth="1px"
-        h="500px"
+        mt="120px"
+        width="1250px"
+        mx="auto"
+        pos="relative"
+        //  borderWidth="1px"
       >
-        <Heading>Hello</Heading>
-        <Heading>user</Heading>
-        <Text fontsize="50px" my={6}>
-          Welcom User
-        </Text>
-        <Button bg="#FFF" variantColor="teal" variant="outline">
-          Get started
-        </Button>
+        <Flex align="center" justify="space-between" >
+          {" "}
+          {/*first Element*/}
+          <Box
+            bgImage={`url('${illus1}')`}
+            bgPos="center"
+            bgSize="70%"
+            bgRepeat="no-repeat"
+            p={5}
+            fontSize="50px"
+            color="white"
+            mr="50px"
+            // shadow="md"
+            // bg="dandelion.100"
+            // borderWidth="1px"
+            h="500px"
+            w="100%"
+          ></Box>
+          <Box>
+            <Text
+              fontSize="40px"
+              mb={4}
+              color="white"
+              px="30px"
+              textAlign="left"
+              fontWeight="600"
+              lineHeight="60px"
+            >
+              Savecode helps to save your search, and make a component for later
+              use
+            </Text>
+            <Link to="/get-started">
+              <Button
+                p="25px"
+                rounded="50px"
+                w="30%"
+                size="lg"
+                mx="80px"
+                bg="#FFF"
+                variantColor="teal"
+                variant="teal"
+                textAlign="left"
+                _hover={{ bg: "#b5626b", color: " #FFF" }}
+              >
+                Get started
+              </Button>
+            </Link>
+          </Box>
+          {/*illustration*/}
+        </Flex>
+        <Stack bg="#FFF" isInline rounded="lg" spacing={15} mb={5}>
+          {" "}
+          {/*************************************************************************second Element*/}
+          <MotionBox
+            // size="40px"
+            bg="red.300"
+            // drag="x"
+            drag="x"
+            dragConstraints={{ left: -400, right: 400 }}
+            // drag1Constraints={{ left: -500, right: 500, }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            bg="#eff"
+            m={5}
+            borderWidth="1px"
+            flex="1"
+          >
+            <Heading mt={3} p={5} fontSize="25px">
+              Build apps fast, without managing infrastructure
+            </Heading>
+            <Text p={5} color="Teal">
+              Firebase gives you functionality like analytics, databases,
+              messaging and crash reporting so you can move quickly and focus on
+              your users.
+            </Text>
+          </MotionBox>
+          <MotionBox
+            // size="40px"
+            bg="red.300"
+            // drag="x"
+            drag="x"
+            dragConstraints={{ left: -400, right: 400 }}
+            // drag1Constraints={{ left: -500, right: 500, }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            bg="#eff"
+            m={5}
+            borderWidth="1px"
+            flex="1"
+          >
+            <Heading mt={3} p={5} fontSize="25px">
+              Build apps fast, without managing infrastructure
+            </Heading>
+            <Text p={5} color="Teal">
+              Firebase gives you functionality like analytics, databases,
+              messaging and crash reporting so you can move quickly and focus on
+              your users.
+            </Text>
+          </MotionBox>
+          <MotionBox
+            // size="40px"
+            bg="red.300"
+            // drag="x"
+            drag="x"
+            dragConstraints={{ left: -400, right: 400 }}
+            // drag1Constraints={{ left: -500, right: 500, }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            bg="#eff"
+            m={5}
+            borderWidth="1px"
+            flex="1"
+          >
+            <Heading mt={3} p={5} fontSize="25px">
+              Build apps fast, without managing infrastructure
+            </Heading>
+            <Text p={5} color="Teal">
+              Firebase gives you functionality like analytics, databases,
+              messaging and crash reporting so you can move quickly and focus on
+              your users.
+            </Text>
+          </MotionBox>
+        </Stack>
       </Box>
-      {/* <Test /> */}
+      <Stack bg="#FFF" spacing={15} mb={5}>
+        <Box h="400px" bg="#FFF">
+          <Text>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem
+            suscipit, maiores repudiandae voluptas magni officiis ut ab ipsa ea,
+            expedita veniam quisquam iusto officia soluta aspernatur ullam
+            dignissimos esse velit!
+          </Text>
+        </Box>
+
+        {/**********************************************************************third Element*/}
+      </Stack>
     </Stack>
   );
 }
 
 export default Landing;
-
-// import React, { Component } from "react";
-//  import { Container, makeStyles, Box, Button, shadows } from "@material-ui/core";
-//  import { profile } from "./UserFunctions";
-
-// class Landing extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <Container className={classes.cont} maxWidth="md">
-//           <Box component="h1" m={5} px={5} boxShadow={2} width={400}>
-//             Welcom
-//           </Box>
-//           <Button onClick={handleClick}>profil</Button>
-//         </Container>
-//       </div>
-//     );
-//   }
-// }
-
-// export default Landing;

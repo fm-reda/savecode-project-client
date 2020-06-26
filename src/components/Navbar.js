@@ -41,6 +41,7 @@ const LinkLogin = ({ children }) => (
 );
 
 const Navbar = (props) => {
+
   // console.log(props.location.pathname);
   const { loggedInStatus, handleLogout } = props;
   const [show, setShow] = React.useState(false);

@@ -4,10 +4,11 @@ import { resolve } from "path";
 const url = "http://localhost:8000/";
 export const register = (newUser) => {
   return axios
-    .post("api/v1/register", newUser, {
+    .post(url + "api/v1/register", newUser, {
       headers: { "content-type": "application/json" },
     })
     .then((res) => {
+      return res;
       console.log(res);
     })
     .catch((err) => {
@@ -16,6 +17,8 @@ export const register = (newUser) => {
 };
 
 export const login = (user) => {
+ 
+
   // console.log("login function");
   return axios
     .post(
@@ -30,6 +33,8 @@ export const login = (user) => {
     )
     .then((res) => {
       localStorage.setItem("userToken", res.data.access_token);
+     
+
 
       return res;
       // console.log(res);

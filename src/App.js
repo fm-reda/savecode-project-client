@@ -4,19 +4,21 @@ import "./App.css";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
+import GetStarted from "./components/GetStarted";
+import { UploadFile } from "./components/UploadFile";
+import Profile from "./components/Profile";
+import Register from "./components/Register";
+import ManageGallery from "./components/ManageGallery";
 import {
   Route,
   BrowserRouter as Router,
   Switch,
   Redirect,
 } from "react-router-dom";
-import Profile from "./components/Profile";
-import { Register } from "./components/Register";
 import { ThemeProvider, theme, CSSReset } from "@chakra-ui/core";
 // import Uploader from "./components/Not-use/Galery-photo/Uploader";
-import ManageGallery from "./components/Not-use/ManageGallery";
 import { Error } from "./components/Error";
-import { UploadFile } from "./components/UploadFile";
+import customTheme from "./themes";
 
 const breakpoints = ["360px", "768px", "1024px", "1440px"];
 breakpoints.sm = breakpoints[0];
@@ -24,10 +26,10 @@ breakpoints.md = breakpoints[1];
 breakpoints.lg = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
-const newTheme = {
-  ...theme,
-  breakpoints,
-};
+// const newTheme = {
+//   ...theme,
+//   breakpoints,
+// };
 
 function App(props) {
   const [loggedInStatus, setLoggedInStatus] = useState(
@@ -39,10 +41,10 @@ function App(props) {
     // setToken(true);
   };
   const handleLogin = (res) => {
-    console.log(res.data.user);
+    // console.log(res.data.user);
     localStorage.setItem("name", res.data.user.name);
     localStorage.setItem("avatar", res.data.user.avatar);
-    console.log(localStorage.getItem( "avatar"));
+    // console.log(localStorage.getItem("avatar"));
     setLoggedInStatus(localStorage.getItem("userToken"));
     // console.log("set login in");
   };
@@ -56,7 +58,7 @@ function App(props) {
 
   return (
     <div className="">
-      <ThemeProvider theme={newTheme}>
+      <ThemeProvider theme={customTheme}>
         <CSSReset />
 
         {/* <Home /> */}
@@ -78,6 +80,17 @@ function App(props) {
               path="/"
               render={(props) => (
                 <Landing {...props} loggedInStatus={loggedInStatus} />
+              )}
+            />
+            <Route
+              exact
+              path="/get-started"
+              render={(props) => (
+                <GetStarted
+                  {...props}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedInStatus}
+                />
               )}
             />
             <Route

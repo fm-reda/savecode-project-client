@@ -1,10 +1,38 @@
 .App {
   text-align: center;
+
 }
+
+* {
+  
+}
+
+/* 
+color1:#b5626b
+color:#3a4f73 */
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.bg-started {
+  background: rgb(235, 122, 245);
+  background: linear-gradient(90deg, rgba(235, 122, 245, 1) 30%, rgba(81, 73, 115, 0.8911939775910365) 58%, rgba(41, 63, 100, 1) 78%);
+
+}
+
+.bg-tab {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 46%, rgba(137, 221, 203, 1) 63%, rgba(81, 202, 176, 1) 81%);
+
+
+
+
+
+
+
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,9 +42,8 @@
 }
 
 .current {
-  background-color: #b0bae8;
-  
-  ;
+  /* background-color: #b0bae8; */
+  border-bottom: 5px solid #61dafb;
 }
 
 .App-header {
@@ -29,6 +56,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+
 
 .App-link {
   color: #61dafb;
