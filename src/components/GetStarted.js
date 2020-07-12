@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { profile, login } from "./UserFunctions";
 import {
@@ -17,49 +17,47 @@ import {
   Divider,
 } from "@chakra-ui/core";
 
-import illus1 from "./../images/Back-ground/testing-default.svg";
+import illus1 from "./../images/Back-ground/laptop.jpg";
 import { motion } from "framer-motion";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
 import Register from "./Register";
-import FirstElement from "./Element/FirstElement";
+
 import RegisterWelcom from "./RegisterWelcom";
 import { RegisterStarted } from "./Register.started";
 import { ElementStarted } from "./Element.started";
 import { createElementFunc } from "./ElementFunctions";
+import { LibraryStarted } from "./Custom-element/LibraryStarted";
+import { LogStatusContext } from "../App";
+
+export const SubmitStartedContext = React.createContext();
 
 const MotionBox = motion.custom(Box);
 function GetStarted(props) {
+  const rendering = useContext(LogStatusContext);
   const { handleLogin } = props;
 
-  //   const { loggedInStatus } = props;
-  // console.log(loggedInStatus);
   const [tabIndex, setTabIndex] = useState(0);
   const [registerSuccess, setRegisterSuccess] = useState({
-    status: false,
+    status: true,
   });
-  const [nextStatus, setNextStatus] = useState(true);
+  const [nextStatus, setNextStatus] = useState(false);
   const [backStatus, setBackStatus] = useState(false);
-  const [element, setElement] = useState({});
+  // const [element, setElement] = useState({});
+  const [datas, setDatas] = useState({});
   const [full, setFull] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [newElement, setNewElement] = useState({});
   // const [loadingSignUp, setLoadingSignUp] = useState(false);
 
   //******************************************function create element
-  const createElement = async (e) => {
-    setLoading(true);
-    await createElementFunc(e).then((res) => {
-      if (res) {
-        console.log(res);
-        setTimeout(() => {
-          setLoading(false);
-          setNextStatus(true);
-        }, 2000);
-      } else {
-        console.log("no rees");
-      }
-    });
-    // console.log(e);
+  const responseElement = (e) => {
+    setNewElement(e);
   };
+  const finish = () => {
+    rendering();
+    props.history.push("/");
+  };
+
   // ******************************************function cheking for tab buttons
   const handleTab = (e) => {
     if (tabIndex == 1) {
@@ -87,136 +85,146 @@ function GetStarted(props) {
     }
   };
   // **********************************function check form element full or not
-  const checkNext = (e, element) => {
-    // switch (e) {
-    //   case "empty":
-    //     setNextStatus(false);
-    //     break;
-    //   case "full":
-    //     setFull(true);
-    //     console.log("full switch" + full);
-    //     setNextStatus(true);
-    //     const newElement = {
-    //       title: element.title,
-    //       code: element.code,
-    //       description: element.description,
-    //     };
-    //     setElement(newElement);
-    //     break;
-    //   default:
-    //     break;
-    // }
+  //recover if error
+  const storeDatas = (e) => {
+    // setDatas(e);
+    // console.log(e);
   };
   // **********************************function validate registration
-  const handleSubmit = (e, pass) => {
-    // console.log(localStorage);
-
+  const handleSubmitStarted = (e, pass) => {
+    // console.log("handle");
     setRegisterSuccess({
       name: localStorage.getItem("name"),
       status: false,
     });
     const user = {
-      email: localStorage.getItem("email"),
+      email: e.success.email,
       password: pass,
     };
-    login(user).then((res) => {
-      // console.log("test");
-      // console.log(res);
-      if (res && res.status == 200) {
-        setNextStatus(true);
-        console.log(res);
-      }
-      handleLogin(res);
-    });
+    // console.log(user);
+    // console.log(e);
 
-    // login user
+    // call function login from App in case Started
+    handleLogin(e, pass, "started");
+    setNextStatus(true);
 
     // props.history.push("/profile");
   };
 
   return (
-    <Stack bg="#ebeeef" h="100%">
+    <Stack bg="#ebeeef">
       {/* <Register /> */}
-      <Box mt="150px" mx="auto" width="1000px" className="bg-tab" rounded="lg">
-        <Tabs p={3} index={tabIndex} variant="soft-rounded" variantColor="blue">
-          <Box justify="left">
-            <TabList p={1} mb={2}>
-              <Tab>Sign up</Tab>
-              <Tab>Create Element</Tab>
-              <Tab>Add to library</Tab>
-            </TabList>
-          </Box>
+      <Box
+        h="100vh"
+        mt="100px"
+        bgImage={`url('${illus1}')`}
+        bgPos="center"
+        bgSize="cover"
+        bgRepeat="no-repeat"
+        p="120px"
+      >
+        <Box
+          mx="auto"
+          width="1000px"
+          className="bg-tab"
+          rounded="lg"
+          shadow="lg"
+        >
+          <Tabs
+            p={3}
+            index={tabIndex}
+            variant="soft-rounded"
+            variantColor="blue"
+          >
+            <Box justify="left">
+              <TabList p={1} mb={2}>
+                <Tab>Sign up</Tab>
+                <Tab>Create Element</Tab>
+                <Tab>Add to library</Tab>
+              </TabList>
+            </Box>
 
-          {/* <Divider borderColor="#ccc" /> */}
+            {/* <Divider borderColor="#ccc" /> */}
 
-          <TabPanels>
-            {/* ****************************************Registration */}
-            <TabPanel h="500px">
-              <Flex color="#000" justify="space-around" h="100%">
-                {/* <RegisterStarted handleSubmit={handleSubmit} /> */}
-                {registerSuccess.status && (
-                  <RegisterStarted
-                    handleSubmit={handleSubmit}
-                    // loadingSignUp={loadingSignUp}
+            <TabPanels>
+              {/* ****************************************Registration */}
+              <TabPanel h="500px">
+                <Flex color="#000" justify="space-around" h="100%">
+                  {/* <LogContext.Provider value={handleLogin}> */}
+                  <SubmitStartedContext.Provider value={handleSubmitStarted}>
+                    {/* <RegisterStarted handleSubmit={handleSubmit} /> */}
+                    {registerSuccess.status && (
+                      <RegisterStarted
+                      // handleSubmitStarted={handleSubmitStarted}
+                      // loadingSignUp={loadingSignUp}
+                      />
+                    )}
+                    {!registerSuccess.status && <RegisterWelcom />}
+                  </SubmitStartedContext.Provider>
+                </Flex>
+              </TabPanel>
+              {/* ****************************************Create element  */}
+              <TabPanel height="" maxHeight="" width="1000px">
+                <Flex color="#000" justify="space-around">
+                  <ElementStarted
+                    responseElement={responseElement}
+                    setNextStatus={setNextStatus}
+                    loading={loading}
+                    // storeDatas={storeDatas}
                   />
-                )}
-                {!registerSuccess.status && <RegisterWelcom />}
-              </Flex>
-            </TabPanel>
-            {/* ****************************************Create element  */}
-            <TabPanel height="" maxHeight="" width="950px">
-              <Flex color="#000" justify="space-around">
-                <ElementStarted
-                  createElement={createElement}
-                  setNextStatus={setNextStatus}
-                  loading={loading}
-                />
-              </Flex>
-            </TabPanel>
-            {/* ****************************************Add to library */}
-            <TabPanel h="500px" width="950px">
-              <Flex color="#000" justify="space-around">
-                {/* <Box>2dqsdqsd</Box> */}
-              </Flex>
-            </TabPanel>
-          </TabPanels>
+                </Flex>
+              </TabPanel>
+              {/* ****************************************Add to library */}
+              <TabPanel width="1000px">
+                <Flex color="#000" justify="space-around">
+                  {tabIndex == 2 && (
+                    <LibraryStarted
+                      // datas={datas}
+                      newElement={newElement}
+                      finish={finish}
+                    />
+                  )}
+                  {/* <LibraryStarted datas={datas} newElement={newElement} /> */}
+                </Flex>
+              </TabPanel>
+            </TabPanels>
 
-          {/* <Divider borderColor="#ccc" /> */}
+            {/* <Divider borderColor="#ccc" /> */}
 
-          <TabList bg="transparent">
-            <Flex w="50%" align="center" justify="space-between" p={5}>
-              <Box>
-                {backStatus && (
+            <TabList bg="transparent">
+              <Flex w="45%" align="center" justify="space-between" p={5}>
+                <Box>
+                  {backStatus && (
+                    <Button
+                      mr={2}
+                      leftIcon="arrow-back"
+                      bg="transparent"
+                      border="1px"
+                      _hover={{ bg: "#ff9e00", color: " white" }}
+                      // isDisabled={tabIndex == 0 ? true : false}
+                      onClick={() => handleTab("back")}
+                      // onClick={() => setTabIndex(tabIndex - 1)}
+                    >
+                      Back
+                    </Button>
+                  )}
+                </Box>
+
+                {nextStatus && (
                   <Button
                     mr={2}
-                    leftIcon="arrow-back"
-                    bg="transparent"
+                    rightIcon="arrow-forward"
+                    bg="#fff"
                     border="1px"
-                    _hover={{ bg: "blue.500", color: " white" }}
-                    // isDisabled={tabIndex == 0 ? true : false}
-                    onClick={() => handleTab("back")}
-                    // onClick={() => setTabIndex(tabIndex - 1)}
+                    _hover={{ bg: "#ff9e00", color: " white" }}
+                    // isDisabled={tabIndex == 1 || nextStatus ? true : false}
+                    onClick={() => handleTab("next")}
+                    // onClick={() => setTabIndex(tabIndex + 1)}
                   >
-                    Back
+                    Next step
                   </Button>
                 )}
-              </Box>
-
-              {nextStatus && (
-                <Button
-                  mr={2}
-                  rightIcon="arrow-forward"
-                  bg="#fff"
-                  border="1px"
-                  _hover={{ bg: "blue.500", color: " white" }}
-                  // isDisabled={tabIndex == 1 || nextStatus ? true : false}
-                  onClick={() => handleTab("next")}
-                  // onClick={() => setTabIndex(tabIndex + 1)}
-                >
-                  Next step
-                </Button>
-              )}
-              {/* <Button
+                {/* <Button
                 mr={2}
                 rightIcon="arrow-forward"
                 bg="transparent"
@@ -227,19 +235,13 @@ function GetStarted(props) {
               >
                 Next
               </Button> */}
-            </Flex>
-          </TabList>
-        </Tabs>
+              </Flex>
+            </TabList>
+          </Tabs>
 
-        {/* Fin container */}
+          {/* Fin container */}
+        </Box>
       </Box>
-
-      <Box
-        mt="120px"
-        width="850px"
-        mx="auto"
-        //  borderWidth="1px"
-      ></Box>
     </Stack>
   );
 }

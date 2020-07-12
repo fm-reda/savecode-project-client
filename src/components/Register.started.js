@@ -1,10 +1,10 @@
 import React from "react";
 import { Stack, Box, Text } from "@chakra-ui/core";
-import illus1 from "./../images/Back-ground/testing-default.svg";
+import illus1 from "./../images/illustration/register1.svg";
 import Register from "./Register";
 
 export const RegisterStarted = (props) => {
-  const { handleSubmit, loadindSignUp } = props;
+  const { loadindSignUp } = props;
   return (
     <>
       <Box
@@ -17,29 +17,30 @@ export const RegisterStarted = (props) => {
         roundedLeft="lg"
         w="100%"
       >
-        <Register handleSubmit={handleSubmit} loadindSignUp={loadindSignUp} />
+        <Register loadindSignUp={loadindSignUp} />
       </Box>
-      <Box roundedRight="lg" px="10px" align="center">
+      <Box roundedRight="lg" px="10px" align="center" mt="25px">
         <Box>
           <Text
             textAlign="center"
             fontSize="30px"
-            mb={4}
             fontWeight="600"
             lineHeight="60px"
             color="#000"
+            mb={5}
             minW="50%"
           >
-            For better exeprience proceed for register
+            For better experience proceed for register
           </Text>
         </Box>
         <Box
+          // bg="#fff"
           // borderWidth="4px"
           bgImage={`url('${illus1}')`}
           bgPos="center"
-          bgSize="60%"
+          bgSize="150%"
           bgRepeat="no-repeat"
-          h="100%"
+          h="50%"
           w="100%"
         ></Box>
       </Box>

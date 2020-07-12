@@ -28,6 +28,7 @@ const Profile = (props) => {
         setStatus(true);
         setName(res.data.success.name);
         setAvatar(res.data.success.avatar);
+        console.log(name);
         // console.log(res.data.success.avatar);
       } else if (res && res.status == 401) {
         props.history.push("/login");
@@ -38,22 +39,22 @@ const Profile = (props) => {
     //   console.log(resu);
     // });
   }, []);
-  const download = () => {
-    console.log("clicked");
-    const urlD = `http://localhost:8000/api/v1/file`;
-    Axios.get(urlD)
-      .then((res) => {
-        console.log(res.data);
-        const img64 = Buffer.from(res.data, "binary").toString("base64");
-        // console.log(img64);
-        setAvatar(res);
-      })
+  // const download = () => {
+  //   console.log("clicked");
+  //   const urlD = `http://localhost:8000/api/v1/file`;
+  //   Axios.get(urlD)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       const img64 = Buffer.from(res.data, "binary").toString("base64");
+  //       // console.log(img64);
+  //       setAvatar(res);
+  //     })
 
-      .catch((err) => {
-        return err.response;
-        console.log(err.response);
-      });
-  };
+  //     .catch((err) => {
+  //       return err.response;
+  //       console.log(err.response);
+  //     });
+  // };
   return (
     <>
       {status && (

@@ -4,3 +4,57 @@
     tabIndex == 2 ? setDisabled(true) : false;
     setTabIndex(tabIndex + 1);
   };
+
+
+  color:
+  blue:#0297e0
+  jaune:#ff9e00
+  hover jaune:#b09e50
+
+
+
+  <Accordion allowToggle w="100%">
+              {categories.map((category) => {
+                return (
+                  <>
+                    <AccordionItem bg="">
+                      <AccordionHeader
+                        // _expanded={{ bg: "myYellow", color: "white" }}
+                        _hover={{ bg: "#124154", color: " white" }}
+                      >
+                        <Box flex="1" textAlign="left">
+                          {category.slug}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionHeader>
+                      category.sub_categories.map((sub) =>{
+                        return(
+                          <>
+                           <NavLink to={`/${category.slug}/${lara}`}>
+                          <AccordionPanel bg="" p={0}>
+                            <Button
+                              w="100%"
+                              bg="#"
+                              _hover={{ bg: "#124154", color: " white" }}
+                            >
+                              subCategorie1
+                            </Button>
+                          </AccordionPanel>
+                        </NavLink>
+                          </>
+                        )
+                       
+                      }
+                      );
+                    </AccordionItem>
+                  </>
+                );
+
+                // <div>
+                //   <Text color="myYellow">{category.slug}</Text>
+                //   {category.sub_categories.map((item) => {
+                //     return <div>{item.slug}</div>;
+                //   })}
+                // </div>;
+              })}
+            </Accordion>

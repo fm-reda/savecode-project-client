@@ -8,8 +8,8 @@ export const register = (newUser) => {
       headers: { "content-type": "application/json" },
     })
     .then((res) => {
-      return res;
       console.log(res);
+      return res;
     })
     .catch((err) => {
       console.log(err);
@@ -17,8 +17,6 @@ export const register = (newUser) => {
 };
 
 export const login = (user) => {
- 
-
   // console.log("login function");
   return axios
     .post(
@@ -33,8 +31,7 @@ export const login = (user) => {
     )
     .then((res) => {
       localStorage.setItem("userToken", res.data.access_token);
-     
-
+      console.log(res);
 
       return res;
       // console.log(res);
@@ -51,6 +48,7 @@ export const login = (user) => {
 export const profile = async () => {
   // console.log("in profile function");
   const token = "Bearer " + localStorage.getItem("userToken");
+  // console.log(token);
   // console.log(token);
   return await axios
     .get(`${url}api/v1/details`, {
@@ -70,29 +68,29 @@ export const profile = async () => {
 
 // download file function
 
-export const download = async () => {
-  const urlD = ` ${url}api/v1/file`;
-  await axios
-    .get(urlD)
-    .then((res) => {
-      const img64 = Buffer.from(res.data, "binary").toString("base64");
-      // console.log(img64);
-      return localStorage.setItem("userToken", res.data.access_token);
-      // console.log(res.data);
+// export const download = async () => {
+//   const urlD = ` ${url}api/v1/file`;
+//   await axios
+//     .get(urlD)
+//     .then((res) => {
+//       const img64 = Buffer.from(res.data, "binary").toString("base64");
+//       // console.log(img64);
+//       return localStorage.setItem("userToken", res.data.access_token);
+//       // console.log(res.data);
 
-      // console.log(res.headers.get('Con'));
-      // return res;
-    })
+//       // console.log(res.headers.get('Con'));
+//       // return res;
+//     })
 
-    // .then((res) => res.json())
-    // .then((json) => {
-    //   console.log(json);
-    // })
-    .catch((err) => {
-      return err.response;
-      console.log(err.response);
-    });
-};
+//     // .then((res) => res.json())
+//     // .then((json) => {
+//     //   console.log(json);
+//     // })
+//     .catch((err) => {
+//       return err.response;
+//       console.log(err.response);
+//     });
+// };
 
 // const urlD = ` ${url}api/v1/file`;
 //   const path = Path.resolve(__dirname, "images", "user.pnj");

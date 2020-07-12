@@ -17,7 +17,10 @@ const RegisterWelcom = () => {
         lineHeight="30px"
         w="50%"
       >
-        <Heading color="Teal"> Welcom {localStorage.getItem("name")}</Heading>
+        <Heading color="#0297e0">
+          {" "}
+          Welcom {localStorage.getItem("name")}
+        </Heading>
         <Text
           textAlign="left"
           fontSize="15px"
@@ -25,15 +28,14 @@ const RegisterWelcom = () => {
           fontWeight="600"
           lineHeight="30px"
           mb="200px"
-          
         >
           Thank your for joining us . now we will create the first{" "}
-          <Box as="span" color="#a54f75" mr={2} textTransform="uppercase">
+          <Box as="span" color="#ff9e00" mr={2} textTransform="uppercase">
             code element
           </Box>
           for your App
         </Text>
-        <Text textAlign="left" fontSize="30px" my={4} color="Teal">
+        <Text textAlign="left" fontSize="30px" my={4} color="#0297e0">
           Go for next step please.
         </Text>
 

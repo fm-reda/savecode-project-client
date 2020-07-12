@@ -22,7 +22,8 @@ const Login = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { handleLogin } = props;
+  const { handleLogin, goRedirect } = props;
+  const [loadingSignIn, setLoadingSignIn] = useState(false);
 
   //Validation form
   function validateEmail(value) {
@@ -48,14 +49,9 @@ const Login = (props) => {
   return (
     <Stack>
       <Box mx="auto">
-        <Heading
-          mt="120px"
-          textAlign={["left", "center"]}
-          fontWeight="5px"
-          mb={5}
-        >
+        {/* <Heading textAlign={["left", "center"]} fontWeight="5px" mb={5}>
           Sign in
-        </Heading>
+        </Heading> */}
         {showAlert && (
           <Alert status="error">
             <AlertIcon />
@@ -67,6 +63,7 @@ const Login = (props) => {
           <Formik
             initialValues={{}}
             onSubmit={(values, actions) => {
+              setLoadingSignIn(true);
               setShowAlert(false);
               // console.log(values.email);
               // console.log(values.password);
@@ -78,25 +75,19 @@ const Login = (props) => {
               };
               setTimeout(() => {
                 login(user).then((res) => {
-                  // console.log("test");
+                  setTimeout(() => {
+                    setLoadingSignIn(false);
+                  }, 1000);
+
                   // console.log(res);
                   if (res && res.status == 200) {
-                  
-
-                    // res.data.status == 401
-                    // <Redirect to="/" />;
-                    // console.log(res);
-                    //Change status login to True
-                    handleLogin(res);
-
-                    props.history.push("/profile");
-
-                    // return <Redirect to="/profile" />;
+                    localStorage.setItem("name", res.data.user.name);
+                    localStorage.setItem("avatar", res.data.user.avatar);
+                    goRedirect();
                   } else if (res && res.status == 401) {
                     setShowAlert(true);
                     setErrors({ msg: " Invalid credentials!! " });
                   } else if (res && res.status == 500) {
-                    
                     setShowAlert(true);
                     setErrors({ msg: " Error connection " });
                     // console.log(res);
@@ -152,12 +143,20 @@ const Login = (props) => {
                 </Field>
 
                 <Button
+                  w="100%"
                   mt={4}
-                  variantColor="teal"
-                  isLoading={props.isSubmitting}
+                  // variantColor="teal"
+                  bg="#ff9e00"
+                  // isLoading={props.isSubmitting}
+                  isLoading={loadingSignIn}
+                  loadingText="Please wait ..."
+                  color="#fff"
+                  _hover={{ bg: "#b09e50", color: " white" }}
                   type="submit"
+                  fontWeight="600"
+                  fontSize="lg"
                 >
-                  Submit
+                  Sign in
                 </Button>
               </form>
             )}

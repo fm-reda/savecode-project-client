@@ -1,5 +1,5 @@
 // Render Prop
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Button,
@@ -16,9 +16,18 @@ import {
 } from "@chakra-ui/core";
 import { register } from "./UserFunctions";
 import { Redirect } from "react-router-dom";
+import { LogContext } from "./../App";
+import { SubmitStartedContext } from "./GetStarted";
+// import Login from "./Login";
 
 const Register = (props) => {
-  const { handleSubmit } = props;
+  const SubmitStarted = useContext(SubmitStartedContext);
+  // console.log(SubmitStarted);
+
+  const Log = useContext(LogContext);
+  // console.log(Log);
+  const { handleSubmit, handleLogin } = props;
+  // console.log(handleSubmit);
 
   // <console className="log"></console>(props);
   const [email, setEmail] = useState("");
@@ -79,21 +88,19 @@ const Register = (props) => {
   return (
     <Stack>
       <Box mx="auto">
-        <Heading textAlign={["left", "center"]} fontWeight="5px" mb={5}>
+        {/* <Heading textAlign={["left", "center"]} fontWeight="5px" mb={5}>
           Sign up
-        </Heading>
+        </Heading> */}
         {showAlert && (
           <Alert status="error">
             <AlertIcon />
             {errors.msg}
           </Alert>
         )}
-
-        <Box p={5} borderWidth="1px" width="400px">
+        <Box p={5} width="400px">
           <Formik
             initialValues={{}}
             onSubmit={(values, actions) => {
-              console.log("test");
               setLoadingSignUp(true);
               setShowAlert(false);
 
@@ -118,6 +125,25 @@ const Register = (props) => {
                   // console.log("test");
                   // console.log(res);
                   if (res && res.status == 201) {
+                    // console.log(values.password);
+                    localStorage.setItem("name", res.data.success.name);
+                    localStorage.setItem("email", res.data.success.email);
+                    // if (Log) {
+                    //   Log(res.data, {
+                    //     pass: values.password,
+                    //     startedStatus: false,
+                    //   });
+                    // }
+
+                    //submit context from GetStartd.js
+                    if (SubmitStarted) {
+                      SubmitStarted(res.data, values.password);
+                    }
+                    if (handleSubmit) {
+                      // console.log("aaaaaaaaaaa");
+                      handleSubmit(res.data, values.password);
+                    }
+
                     toast({
                       title: "Account created.",
                       description: "We've created your account for you.",
@@ -126,17 +152,6 @@ const Register = (props) => {
                       isClosable: true,
                       position: "top",
                     });
-                    console.log(res);
-
-                    localStorage.setItem("userToken", res.data.success.token);
-                    console.log(
-                      "storage from register component " +
-                        localStorage.userToken
-                    );
-                    localStorage.setItem("name", res.data.success.name);
-                    localStorage.setItem("email", res.data.success.email);
-
-                    handleSubmit(res, values.password);
 
                     // return <Redirect to="/profile" />;
                   } else if (res && res.status == 401) {
@@ -145,6 +160,10 @@ const Register = (props) => {
                   } else if (res && res.status == 500) {
                     setShowAlert(true);
                     setErrors({ msg: " Error connection " });
+                    // console.log(res);
+                  } else if (res && res.status == 208) {
+                    setShowAlert(true);
+                    setErrors({ msg: " Email already used" });
                     // console.log(res);
                   } else {
                     setShowAlert(true);
@@ -234,14 +253,15 @@ const Register = (props) => {
 
                 <Button
                   mt={4}
-                  bg="#1db08f"
+                  bg="#ff9e00"
                   isLoading={loadingSignUp}
                   loadingText="Please wait ..."
+                  color="#fff"
+                  _hover={{ bg: "#b09e50", color: " white" }}
                   type="submit"
                   w="100%"
-                  _hover={{ bg: "#098468", color: " white" }}
                 >
-                  Submit
+                  Register
                 </Button>
               </form>
             )}

@@ -13,12 +13,15 @@ import {
   Input,
   Button,
   FormHelperText,
+  Select,
 } from "@chakra-ui/core";
 import { Field } from "formik";
 import { createElementFunc } from "../ElementFunctions";
+import { getDefaultCategories } from "../ElementFunctions";
+import { useEffect } from "react";
 
 export const FormNewElement = (props) => {
-  const { inputChange, setNextStatus } = props;
+  const { inputChange, setNextStatus, responseElement } = props;
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [description, setDescription] = useState("");
@@ -26,10 +29,18 @@ export const FormNewElement = (props) => {
   const [errors, setErrors] = useState([]);
   const [disable, setdisable] = useState(false);
   const [loadCreateElm, setLoadCreateElm] = useState(false);
-  const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState({ categories: 2 });
+  const [defaultCategories, setDefaultCategories] = useState([]);
+  const [disableTitle, setDisableTitle] = useState(false);
   const toast = useToast();
   //---------------------------------Function Change
 
+  useEffect(() => {
+    getDefaultCategories().then((res) => {
+      // console.log(res);
+      setDefaultCategories(res.data.success);
+    });
+  }, []);
   const handleChange = (e) => {
     setdisable(false);
 
@@ -39,7 +50,7 @@ export const FormNewElement = (props) => {
       setErrors({ ...errors, [e.target.id]: false });
     }
     //save data in state
-
+    // console.log(e.target.value);
     setDatas({ ...datas, [e.target.id]: e.target.value });
     inputChange({ ...datas, [e.target.id]: e.target.value });
     // console.log(datas);
@@ -49,15 +60,18 @@ export const FormNewElement = (props) => {
     // console.log(e.target);
     e.preventDefault();
     setLoadCreateElm(true);
-    setTimeout(() => {
-      setLoadCreateElm(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setLoadCreateElm(false);
+    // }, 1000);
 
     //--------------------------------check if field are empty after submit
     if (!datas.title || !datas.code || !datas.description) {
-      // setdisable(true);
+      // setdisable(true);  
       setErrors({ msg: "Field or many are empty" });
       setShowAlert(true);
+      setTimeout(() => {
+        setLoadCreateElm(false);
+      }, 2000);
       setTimeout(() => {
         setShowAlert(false);
       }, 5000);
@@ -68,14 +82,16 @@ export const FormNewElement = (props) => {
         title: datas.title,
         code: datas.code,
         description: datas.description,
+        default_category_id: datas.categories,
       };
       setTimeout(() => {
         createElementFunc(newElement).then((res) => {
           setLoadCreateElm(false);
           console.log(res);
-          // console.log("test");
+
           if (res) {
             if (res.status == 201) {
+              responseElement(res.data.success);
               toast({
                 title: "Element created.",
                 description: "We've created your code element for you.",
@@ -110,20 +126,36 @@ export const FormNewElement = (props) => {
       <Box
       //  mt="200px"
       >
-        {showAlert && (
-          <Alert status="error">
-            <AlertIcon />
-            {errors.msg}
-          </Alert>
-        )}
-
         <Box p={5} borderWidth="1px" width="400px">
+          {showAlert && (
+            <Alert status="error">
+              <AlertIcon />
+              {errors.msg}
+            </Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <FormControl mb={5}>
+              <FormLabel htmlFor="categories">
+                <Heading fontSize="15px">Categories</Heading>
+              </FormLabel>
+
+              <Select id="categories" onChange={(e) => handleChange(e)}>
+                {defaultCategories.map((category, i) => (
+                  <option key={i} value={category.id}>
+                    {category.title}
+                  </option>
+                ))}
+
+                {/* <option value="3">react</option> */}
+              </Select>
+              {/* <Select id="react" placeholder="Autre" value="react" /> */}
+            </FormControl>
+            <FormControl mb={5}>
               <FormLabel htmlFor="title">
-                <Heading fontSize="20px">Title</Heading>
+                <Heading fontSize="15px">Title</Heading>
               </FormLabel>
               <Input
+                // isDisabled={true}
                 isInvalid={errors.title ? true : false}
                 errorBorderColor="crimson"
                 focusBorderColor="lime"
@@ -138,7 +170,7 @@ export const FormNewElement = (props) => {
 
             <FormControl mb={5}>
               <FormLabel htmlFor="code">
-                <Heading fontSize="20px">Code</Heading>
+                <Heading fontSize="15px">Code</Heading>
               </FormLabel>
               <Textarea
                 onChange={(e) => handleChange(e)}
@@ -157,7 +189,7 @@ export const FormNewElement = (props) => {
             <FormControl mb={5}>
               <FormLabel htmlFor="description">
                 {" "}
-                <Heading fontSize="20px">Description</Heading>
+                <Heading fontSize="15px">Description</Heading>
               </FormLabel>
               <Textarea
                 onChange={(e) => handleChange(e)}
@@ -187,54 +219,57 @@ export const FormNewElement = (props) => {
           </form>
         </Box>
       </Box>
-      {/* <Formik
-            initialValues={{}}
-            onSubmit={(values, actions) => {
-              setShowAlert(false);
-              setLoadCreateElm(true);
-              // console.log(values.email);
-
-              const newElement = {
-                title: values.title,
-                code: values.code,
-                description: values.description,
-              };
-              setTimeout(() => {
-                createElementFunc(newElement).then((res) => {
-                  setLoadCreateElm(false);
-                  console.log(res);
-                  // console.log("test");
-                  if (res) {
-                    if (res.status == 201) {
-                      toast({
-                        title: "Element created.",
-                        description: "We've created your code element for you.",
-                        status: "success",
-                        duration: 5000,
-                        isClosable: true,
-                        position: "top",
-                      });
-                      setdisable(true);
-                    } else if (res.status === 401) {
-                      setShowAlert(true);
-                      setErrors({ msg: " not authorized " });
-                    } else if (res.status === 500) {
-                      setShowAlert(true);
-                      setErrors({ msg: " Error conection " });
-                    }
-                  } else {
-                    setLoadCreateElm(false);
-                    setShowAlert(true);
-                    setErrors({
-                      msg: "The server not responding. Please try again ",
-                    });
-                  }
-                });
-                // alert(JSON.stringify(values, null, 2));
-                actions.setSubmitting(false);
-              }, 1000);
-            }}
-          > */}
     </Stack>
   );
 };
+
+{
+  /* <Formik
+      initialValues={{}}
+      onSubmit={(values, actions) => {
+        setShowAlert(false);
+        setLoadCreateElm(true);
+        // console.log(values.email);
+
+        const newElement = {
+          title: values.title,
+          code: values.code,
+          description: values.description,
+        };
+        setTimeout(() => {
+          createElementFunc(newElement).then((res) => {
+            setLoadCreateElm(false);
+            console.log(res);
+            // console.log("test");
+            if (res) {
+              if (res.status == 201) {
+                toast({
+                  title: "Element created.",
+                  description: "We've created your code element for you.",
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+                  position: "top",
+                });
+                setdisable(true);
+              } else if (res.status === 401) {
+                setShowAlert(true);
+                setErrors({ msg: " not authorized " });
+              } else if (res.status === 500) {
+                setShowAlert(true);
+                setErrors({ msg: " Error conection " });
+              }
+            } else {
+              setLoadCreateElm(false);
+              setShowAlert(true);
+              setErrors({
+                msg: "The server not responding. Please try again ",
+              });
+            }
+          });
+          // alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }, 1000);
+      }}
+    > */
+}

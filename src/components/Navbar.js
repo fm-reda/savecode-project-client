@@ -9,7 +9,9 @@ import {
   Avatar,
 } from "@chakra-ui/core";
 import { NavLink, Redirect } from "react-router-dom";
+import Logo from "./../images/Logo/logo5.png";
 import "../App.css";
+import { useEffect } from "react";
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
     {children}
@@ -17,49 +19,65 @@ const MenuItems = ({ children }) => (
 );
 const LinkLogin = ({ children }) => (
   <>
+    <NavLink to="/Login">
+      <Button
+        color="#000"
+        mr={2}
+        bg="#f1f1f1"
+        variantColor="#000"
+        rounded="30px"
+        _hover={{ bg: "blue.500", color: " white" }}
+      >
+        Log in
+      </Button>
+    </NavLink>
     <NavLink to="/register">
       <Button
         mr={2}
-        bg="transparent"
+        bg="#ff9e00"
         border="1px"
-        _hover={{ bg: "blue.500", color: " white" }}
+        rounded="30px"
+        variantColor="#ff9e00"
+        _hover={{ bg: "#66709b", color: " white" }}
       >
-        Create account
-      </Button>
-    </NavLink>
-    <NavLink to="/Login">
-      <Button
-        mr={2}
-        bg="transparent"
-        border="1px"
-        _hover={{ bg: "blue.500", color: " white" }}
-      >
-        Login
+        Sign Up
       </Button>
     </NavLink>
   </>
 );
 
 const Navbar = (props) => {
+  // console.log(props);
 
   // console.log(props.location.pathname);
   const { loggedInStatus, handleLogout } = props;
+  // console.log(loggedInStatus);
   const [show, setShow] = React.useState(false);
-  const [local, setLocal] = useState("");
+  const [url, setUrl] = useState("");
   const handleToggle = () => setShow(!show);
-  const handlClick = () => {
-    localStorage.setItem("userToken", "");
-    // setLocal("test");
-    return <Redirect to={"/login"} />;
-  };
+  useEffect(() => {
+    if (loggedInStatus) {
+      console.log("home");
+      setUrl("home");
+    } else {
+      setUrl("");
+    }
+  }, [loggedInStatus]);
+  // const handlClick = () => {
+  //   localStorage.setItem("userToken", "");
+  //   // setLocal("test");
+  //   return <Redirect to={"/login"} />;
+  // };
   const LinkLogout = () => (
     <Flex align="center">
-      <NavLink to="/">
+      <NavLink to="/login">
         <Button
           mr={2}
-          bg="transparent"
+          bg="#ff9e00"
           border="1px"
-          _hover={{ bg: "red.500", color: " white" }}
+          rounded="30px"
+          variantColor="#ff9e00"
+          _hover={{ bg: "#b09e50", color: " white" }}
           onClick={() => {
             handleLogout();
           }}
@@ -73,12 +91,7 @@ const Navbar = (props) => {
         name="Dan Abrahmov"
         src={`http://localhost:8000/storage/${localStorage.getItem("avatar")}`}
       />
-      <Text
-        textTransform="uppercase"
-        fontSize="15px"
-        fontWeight="500"
-        color="teal.500"
-      >
+      <Text fontSize="15px" fontWeight="500" color="gray.500">
         {localStorage.getItem("name")}
       </Text>
     </Flex>
@@ -121,7 +134,17 @@ const Navbar = (props) => {
     >
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg" letterSpacing={"-0.1rem"}>
-          <NavLink to="/"> SaveCode</NavLink>
+          <NavLink to={`/${url}`}>
+            {" "}
+            <Box
+              bgImage={`url('${Logo}')`}
+              bgPos="center"
+              bgSize="100%"
+              bgRepeat="no-repeat"
+              w="200px"
+              h="60px"
+            ></Box>
+          </NavLink>
         </Heading>
       </Flex>
 
@@ -175,6 +198,17 @@ const Navbar = (props) => {
               rounded="md"
             >
               Profile
+            </Box>
+          </NavLink>
+        </MenuItems>
+        <MenuItems>
+          <NavLink to="/home">
+            <Box
+              className={props.location.pathname === "/home" ? "current" : ""}
+              p={2}
+              rounded="md"
+            >
+              Home
             </Box>
           </NavLink>
         </MenuItems>

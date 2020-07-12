@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Element from "./Element/Element";
+
 import {
   Heading,
   Text,
@@ -10,13 +10,14 @@ import {
   Input,
   FormHelperText,
   usePrevious,
+  Textarea,
 } from "@chakra-ui/core";
-import { FormAddElement } from "./Element/form.AddElement";
+// import { FormAddElement } from "./Element/form.AddElement";
 import { FormNewElement } from "./Element/FormNewElement";
 
 export const ElementStarted = (props) => {
-  const { setNextStatus, createElement, loading } = props;
-  console.log(setNextStatus);
+  const { setNextStatus, responseElement, loading, storeDatas } = props;
+  // console.log(setNextStatus);
   const [title, setTitle] = useState();
 
   const [code, setCode] = useState("");
@@ -27,8 +28,8 @@ export const ElementStarted = (props) => {
 
   const inputChange = (e) => {
     setDatas({ title: e.title, code: e.code, description: e.description });
+    // storeDatas(datas);
 
-    console.log(e.description);
     switch (e) {
       case "title":
         setTitle(e.target.value);
@@ -46,17 +47,6 @@ export const ElementStarted = (props) => {
       default:
         break;
     }
-    // if (title && code && description) {
-    //   checkNext("full", {
-    //     title: title,
-    //     code: code,
-    //     description: description,
-    //   });
-    // } else {
-    //   // checkNext("empty");
-    // }
-
-    // setTitle({ [e.target.name]: e.target.value });
   };
 
   return (
@@ -73,80 +63,53 @@ export const ElementStarted = (props) => {
         lineHeight="30px"
         w="50%"
       >
-        <Heading size="lg" color="Teal" mb={3}>
+        <Heading size="lg" color="#0297e0" mb={3}>
           Creating Element Code
         </Heading>
         <FormNewElement
+          responseElement={responseElement}
           inputChange={inputChange}
           setNextStatus={setNextStatus}
         />
-
-        {/* <FormControl>
-          <FormLabel htmlFor="email">Title</FormLabel>
-          <Input
-            type="text"
-            id="email"
-            aria-describedby="email-helper-text"
-            onChange={handleChange}
-            name="title"
-            isDisabled={loading}
-          />
-    
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="email">Code of element</FormLabel>
-          <Input
-            type="text"
-            id="code"
-            ia-describedby="email-helper-text"
-            onChange={handleChange}
-            name="code"
-            isDisabled={loading}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="email">Description</FormLabel>
-          <Input
-            type="text"
-            onChange={handleChange}
-            ia-describedby="email-helper-text"
-            name="description"
-            isDisabled={loading}
-          />
-        </FormControl> */}
       </Box>
+      {/* <Textarea isDisabled>dqsd</Textarea> */}
       <Box
         roundedRight="lg"
         px="10px"
         align="center"
-        w="50%"
+        w="45%"
         mx="auto"
         mt="55px"
       >
-        Title
+        <Text fontSize="20px" mb={1}>
+          Title
+        </Text>
+        <Input type="text" value={datas.title} size="sm" mb={10} />
+
+        <Text fontSize="20px" mb={1}>
+          Element (code)
+        </Text>
         <Box
-          borderWidth="1px"
-          p={3}
-          w="80%"
-          bg="#fff"
-          rounded="md"
-          shadow="lg"
-          mb="40px"
-        >
-          {datas.title}
-        </Box>
-        Element
-        <Box
+          color="#fff"
           pos="relative"
-          p={5}
-          w="80%"
-          bg="#011627"
+          p={1}
           rounded="md"
+          bg="#125462"
           shadow="xl"
-          color="#FFF"
-          mb={5}
-          minH="100px"
+          mb={10}
         >
+          <Textarea
+            p={3}
+            pr="80px"
+            h="10px"
+            isDisabled
+            resize="none"
+            size="10px"
+            rows="1"
+            value={datas.code}
+            rounded="md"
+            color="#000"
+          ></Textarea>
           <Button
             variantColor="teal"
             size="xs"
@@ -156,43 +119,21 @@ export const ElementStarted = (props) => {
           >
             Copy
           </Button>
-          <Text pl={2} pr="50px" overflowWrap>
-            {datas.code}
-          </Text>
         </Box>
-        Description
-        <Box
-          borderWidth="1px"
-          p={3}
-          w="80%"
-          bg="#fff"
-          rounded="md"
-          shadow="lg"
-          mb="50px"
-          minH="150px"
-        >
-          {datas.description}
+        <Text fontSize="20px" mb={1}>
+          Description
+        </Text>
+        <Box pos="relative" p={1} rounded="md" bg="#FFF" shadow="xl" h="200px">
+          <Textarea
+            p={5}
+            h="100%"
+            resize="none"
+            value={datas.description}
+            rounded="md"
+            color="#000"
+            fontWeight="600"
+          ></Textarea>
         </Box>
-        {/* <Button
-          isLoading={loading}
-          loadingText="Creating element..."
-          w="80%"
-          textAlign="center"
-          size="lg"
-          bg="green.600"
-          color="white"
-          _hover={{ bg: "green.400", color: " black" }}
-          onClick={() => {
-            createElement({
-              title: title,
-              code: code,
-              description: description,
-              user_id: 4,
-            });
-          }}
-        >
-          Create
-        </Button> */}
       </Box>
     </>
   );

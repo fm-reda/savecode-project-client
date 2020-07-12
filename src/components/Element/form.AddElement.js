@@ -16,7 +16,7 @@ import {
   FormHelperText,
 } from "@chakra-ui/core";
 import { Field, Formik } from "formik";
-import { createElementFunc } from "./../ElementFunctions";
+import { createElementFunc } from "../ElementFunctions";
 
 export const FormAddElement = (props) => {
   const { handleLogin, handleChange } = props;

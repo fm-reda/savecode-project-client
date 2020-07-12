@@ -12,7 +12,6 @@ const customTheme = {
     body: "system-ui, sans-serif",
     heading: "sans-serif",
     mono: "Staatliches",
-    
   },
   colors: {
     ...theme.colors,
@@ -28,6 +27,14 @@ const customTheme = {
       100: "#FFE066",
       200: "#FFDA49",
     },
+    myBlue: "#0297e0",
+    myYellow: "#ff9e00",
+    firebase: "#051e34",
+    bgGray: "#f0f2f4",
+    laravel: "#ff2d20d4",
+    react: "#61dafb91",
+    javascript: "#f0d91d91",
+    github: "#24292e91",
   },
   breakpoints,
 };
