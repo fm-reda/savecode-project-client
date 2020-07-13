@@ -37,8 +37,13 @@ export const FormNewElement = (props) => {
 
   useEffect(() => {
     getDefaultCategories().then((res) => {
+      if (!res) {
+        console.log("error");
+      } else {
+        setDefaultCategories(res.data.success);
+      }
+
       // console.log(res);
-      setDefaultCategories(res.data.success);
     });
   }, []);
   const handleChange = (e) => {
@@ -66,7 +71,7 @@ export const FormNewElement = (props) => {
 
     //--------------------------------check if field are empty after submit
     if (!datas.title || !datas.code || !datas.description) {
-      // setdisable(true);  
+      // setdisable(true);
       setErrors({ msg: "Field or many are empty" });
       setShowAlert(true);
       setTimeout(() => {

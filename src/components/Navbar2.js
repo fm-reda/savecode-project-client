@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Heading,
@@ -17,6 +17,7 @@ import {
 import { NavLink, Redirect, Router, Route } from "react-router-dom";
 import Logo from "./../images/Logo/logo5white.png";
 import "../App.css";
+import { categoriesContext } from "../App";
 import { useEffect } from "react";
 import { LoginPage } from "./pages/LoginPage";
 import NewElementPage from "./pages/NewElementPage";
@@ -57,6 +58,11 @@ const LinkLogin = ({ children }) => (
 );
 
 const Navbar2 = (props) => {
+  const categoriesProps = useContext(categoriesContext);
+
+  setTimeout(() => {
+    // console.log(categoriesProps.success.categories);
+  }, 10000);
   const { rendering } = props;
   const [renderNavbar, setRenderNavbar] = useState(false);
   // console.log("navbar22222222222222");
@@ -73,12 +79,19 @@ const Navbar2 = (props) => {
 
   const handleToggle = () => setShow(!show);
   useEffect(() => {
+    if (categoriesProps.success) {
+      setCategories(categoriesProps.success.categories);
+    }
+    // console.log(categoriesProps.success);
+    // setCategoriesTab(categoriesProps.success.categories);
     // rendering();
-    getCategories().then((res) => {
-      // console.log(res);
-      setCategories(res.data.success.categories);
-      // console.log(res);
-    });
+    // getCategories().then((res) => {
+    //   if (res) {
+    //     setCategories(res.data.success.categories);
+    //   }
+    //   // console.log(res);
+    //   // console.log(res);
+    // });
   }, [rendering]);
 
   const LinkLogout = () => (
@@ -117,7 +130,6 @@ const Navbar2 = (props) => {
     // ******************************************************sidebar
     <Flex>
       <Box
-        
         h="100vh"
         // h="300px"
         overflowY="auto"
@@ -152,11 +164,11 @@ const Navbar2 = (props) => {
 
             <Accordion allowToggle w="100%" mt={5}>
               {categories.map((category, i) => {
+                // _expanded={{ bg: "myYellow", color: "white" }}
                 return (
                   <>
                     <AccordionItem key={i} bg="">
                       <AccordionHeader
-                        // _expanded={{ bg: "myYellow", color: "white" }}
                         _hover={{ bg: "#124154", color: " white" }}
                       >
                         <Box flex="1" textAlign="left">
@@ -164,7 +176,6 @@ const Navbar2 = (props) => {
                         </Box>
                         <AccordionIcon />
                       </AccordionHeader>
-                      {/* <Text color="myYellow">{category.slug}</Text> */}
 
                       {category.sub_categories.map((item, j) => {
                         return (
@@ -178,7 +189,6 @@ const Navbar2 = (props) => {
                                   color="#333"
                                   w="100%"
                                   bg="#fff"
-                                  // variant="outline"
                                   _active={{
                                     bg: "#dddfe2",
                                     transform: "scale(0.98)",
@@ -195,7 +205,6 @@ const Navbar2 = (props) => {
                                 </Button>
                               </AccordionPanel>
                             </NavLink>
-                            {/* <div>{item.slug}</div> */}
                           </>
                         );
                       })}

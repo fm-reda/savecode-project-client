@@ -42,7 +42,26 @@ export const getDefaultCategories = () => {
       return res;
     })
     .catch((err) => {
+      // console.log(err.response);
+      return err.response;
+    });
+};
+
+export const singleElement = (id) => {
+  console.log(id);
+  return axios
+    .get(url + `api/v1/elements/${id}`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
       return err.response;
       console.log(err);
     });
-};
+  }

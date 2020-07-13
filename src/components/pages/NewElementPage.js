@@ -49,41 +49,48 @@ const NewElementPage = (props) => {
   const [category, setCategory] = useState("laravel");
   const [subCategory, setSubCategory] = useState("");
   const [renderNewElement, setRenderNewElement] = useState(false);
+  const [fromNewElement, setFromNewElement] = useState(true);
 
   // const [disableTitle, setDisableTitle] = useState(false);
   const toast = useToast();
   // console.log("test");
   useEffect(() => {
     getCategories().then((res) => {
-      // console.log(res.data.success.categories[2].sub_categories);
-      setCategories(res.data.success.categories);
-      // console.log(res.data.success.categories[0].sub_categories[0].title);
-      // console.log(res.data.success.categories[0].sub_categories);
-      if (res.data.success.categories[0].sub_categories[0]) {
-        setSubCategories(res.data.success.categories[0].sub_categories);
+      if (res) {
+        // console.log(res.data.success.categories[2].sub_categories);
+        setCategories(res.data.success.categories);
+        // console.log(res.data.success.categories[0].sub_categories[0].title);
+        // console.log(res.data.success.categories[0].sub_categories);
+        if (res.data.success.categories[0].sub_categories[0]) {
+          setSubCategories(res.data.success.categories[0].sub_categories);
 
-        setSubCategory(res.data.success.categories[0].sub_categories[0].title);
-      } else {
-        setSubCategory("");
+          setSubCategory(
+            res.data.success.categories[0].sub_categories[0].title
+          );
+        } else {
+          setSubCategory("");
+        }
       }
     });
   }, []);
   useEffect(() => {
     getCategories().then((res) => {
-      // console.log(res.data.success.categories[2].sub_categories);
-      setCategories(res.data.success.categories);
-      res.data.success.categories.map((item, i) => {
-        if (item.title === category) {
-          // console.log(item);
-          setSubCategories(item.sub_categories);
-          // console.log(item.sub_categories);
-          if (item.sub_categories[0]) {
-            setSubCategory(item.sub_categories[0].title);
-          } else {
-            setSubCategory("");
+      if (res) {
+        setCategories(res.data.success.categories);
+        res.data.success.categories.map((item, i) => {
+          if (item.title === category) {
+            // console.log(item);
+            setSubCategories(item.sub_categories);
+            // console.log(item.sub_categories);
+            if (item.sub_categories[0]) {
+              setSubCategory(item.sub_categories[0].title);
+            } else {
+              setSubCategory("");
+            }
           }
-        }
-      });
+        });
+      }
+      // console.log(res.data.success.categories[2].sub_categories);
     });
     // setRenderNewElement(!renderNewElement);
   }, [renderNewElement]);
@@ -211,7 +218,7 @@ const NewElementPage = (props) => {
     createCategory({ category: e }).then((res) => {
       // console.log(res);
       setRenderNewElement(!renderNewElement);
-      rendering();
+      rendering(true);
       setShowModalCat(false);
       // setTimeout(() => {
       //   closeModal();
@@ -228,7 +235,7 @@ const NewElementPage = (props) => {
     createSubCategory(e).then((res) => {
       // console.log(res);
       setRenderNewElement(!renderNewElement);
-      rendering();
+      rendering(true);
       setShowModalSub(false);
       // setTimeout(() => {
       //   closeModal();
@@ -300,44 +307,7 @@ const NewElementPage = (props) => {
                 </Flex>
 
                 {/* ** **********************************************************input sub categorie */}
-                {/* <FormControl mb={5} w="50%">
-                    <FormLabel mb={3} htmlFor="subCategory">
-                      <Heading fontSize="15px">Sub category</Heading>
-                    </FormLabel>
 
-                    <Input
-                      mr={3}
-                      // isDisabled={true}
-                      isInvalid={errors.subCategory ? true : false}
-                      errorBorderColor="crimson"
-                      focusBorderColor="lime"
-                      onChange={(e) => handleChange(e)}
-                      id="subCategory"
-                      placeholder="eg. migration"
-                    />
-                    <FormHelperText color="crimson" id="email-helper-text">
-                      {errors.title ? errors.title : ""}
-                    </FormHelperText>
-                  </FormControl> */}
-                {/* **********************************************************select with sub category */}
-                {/* {showSub && (
-                  <FormControl mb={5} w="50%" mr={5}>
-                    <FormLabel mb={3} htmlFor="subCategory">
-                      <Heading fontSize="15px">subCategory</Heading>
-                    </FormLabel>
-
-                    <Select id="subCategory" onChange={(e) => handleChange(e)}>
-                      {subCategories.map((subCategory, i) => (
-                        <option key={i} value={subCategory.title}>
-                          {subCategory.title}
-                        </option>
-                      ))}
-
-                    </Select>
-
-          
-                  </FormControl>
-                )} */}
                 <Flex w="50%">
                   <FormControl mb={5} w="50%" mr={5}>
                     <FormLabel mb={3} htmlFor="subCategory">

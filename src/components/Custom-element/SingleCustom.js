@@ -11,6 +11,9 @@ import {
 import { useEffect } from "react";
 import { customBycategory } from "./CustomFunctions";
 import "./../../App.css";
+import { Link, NavLink } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { SingleCustomPage } from "../pages/SingleCustomPage";
 
 const SingleCustom = (props) => {
   // console.log(props);
@@ -54,7 +57,7 @@ const SingleCustom = (props) => {
   //   setShowCode(false);
   // };
   const handleClick = () => {
-    console.log("clicked");
+    // console.log("clicked");
   };
   return (
     <Stack ml="15%" mt="4%" p={5} bg="bgGray" h="100vh" className="">
@@ -67,6 +70,7 @@ const SingleCustom = (props) => {
         // w="110%"
         // ml="-20px"
         // mt="-25px"
+        mt={5}
         color="#000"
       >
         <Heading fontSize="40px" textTransform="uppercase">
@@ -126,10 +130,25 @@ const SingleCustom = (props) => {
                   {item.element.description}
                 </Text>
                 <Flex>
-                  <Button mx="auto" onClick={handleClick} bg="myYellow">
-                    View
-                  </Button>
+                  <Link to={`/custom/single/${item.element_id}`}>
+                    <Button mx="auto" onClick={handleClick} bg="myYellow">
+                      View
+                    </Button>
+                  </Link>
                 </Flex>
+                {/* <Router>
+                  <Route
+                    exact
+                    path="/custom/single/:id"
+                    render={(props) => (
+                      <SingleCustomPage
+                        {...props}
+                        // loggedInStatus={loggedInStatus}
+                        // handleLogout={handleLogout}
+                      />
+                    )}
+                  />
+                </Router> */}
 
                 {showCode === item.element.id && (
                   <Box

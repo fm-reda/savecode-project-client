@@ -27,10 +27,6 @@ export const createCustomStarted = (newCategory) => {
     });
 };
 export const customBycategory = (categories) => {
-  // console.log(categories);
-
-  // return localStorage.getItem("userToken");
-
   return axios
     .post(url + "api/v1/custom-category", categories, {
       headers: {
@@ -47,22 +43,21 @@ export const customBycategory = (categories) => {
       console.log(err);
     });
 };
-// export const getCategories = () => {
-//   // return localStorage.getItem("userToken");
-
-//   return axios
-//     .get(url + "api/v1/categories", {
-//       headers: {
-//         "content-type": "application/json",
-//         // Authorization: `Bearer ${localStorage.userToken}`,
-//       },
-//     })
-//     .then((res) => {
-//       console.log(res);
-//       return res;
-//     })
-//     .catch((err) => {
-//       return err.response;
-//       console.log(err);
-//     });
-// };
+export const singleElement = (id) => {
+  console.log(id);
+  return axios
+    .get(url + `api/v1/elements/${id}`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+      console.log(err);
+    });
+};
