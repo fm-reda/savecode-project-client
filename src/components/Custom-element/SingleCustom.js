@@ -7,6 +7,7 @@ import {
   Text,
   Divider,
   Button,
+  PseudoBox,
 } from "@chakra-ui/core";
 import { useEffect } from "react";
 import { customBycategory } from "./CustomFunctions";
@@ -61,25 +62,29 @@ const SingleCustom = (props) => {
   };
   return (
     <Stack ml="15%" mt="4%" p={5} bg="bgGray" h="100vh" className="">
-      <Box
-        p={3}
-        // mx="auto"
-        // h="150px"
-        // bg="#000"
-        // bg="laravel"
-        // w="110%"
-        // ml="-20px"
-        // mt="-25px"
-        mt={5}
-        color="#000"
-      >
-        <Heading fontSize="40px" textTransform="uppercase">
-          Category : {category}
-        </Heading>
-        <Heading color="myYellow">{subCategory}</Heading>
-      </Box>
-      <Divider borderColor="red"></Divider>
-      {/* <Flex>
+      <Box mx="auto" w="100%">
+        <Box
+          p={5}
+          // mx="auto"
+          // h="150px"
+          // bg="#000"
+          bg="#fff"
+          // w="110%"
+          // ml="-20px"
+          mt="6%"
+          // mt={5}
+          color="#000"
+          rounded="lg"
+        >
+          <Heading fontSize="30px" textTransform="uppercase">
+            Category : {category}
+          </Heading>
+          <Heading color="myYellow" fontSize="25px">
+            {subCategory}
+          </Heading>
+        </Box>
+        {/* <Divider borderColor="red"></Divider> */}
+        {/* <Flex>
         {customs.map((item) => {
           return (
             <>
@@ -92,100 +97,163 @@ const SingleCustom = (props) => {
           );
         })}
       </Flex> */}
-      <Stack
-        ml="100px"
-        maxWidth="3000px"
+
+        <Stack
+          justifyContent="center"
+          align="center"
+          mt="3%"
+          bg="bgGray"
+          // minH="100vh"
+          className=""
+          isInline
+          // width="1430px"
+
+          shouldWrapChildren={true}
+          flexWrap="wrap"
+        >
+          {customs.map((item, i) => {
+            return (
+              <>
+                <PseudoBox
+                  key={i}
+                  rounded="md"
+                  height="200px"
+                  shadow="lg"
+                  p={3}
+                  bg="#fff"
+                  width="363px"
+                  mb={5}
+                  mx={3}
+                  _hover={{
+                    borderColor: "myYellow",
+                    bg: "myBlue",
+                    color: "white",
+                  }}
+                  // width="100%"
+                >
+                  <Flex
+                    direction="column"
+                    justifyContent="space-between"
+                    h="100%"
+                  >
+                    <Box>
+                      <Heading fontSize="20px">
+                        {" "}
+                        {item.element.title.substring(0, 30) + "..."}
+                      </Heading>
+                      <Divider></Divider>
+                      <Box>
+                        {item.element.description.substring(0, 100) + "..."}
+                      </Box>
+                    </Box>
+                    <Flex justifyContent="center">
+                      <Link to={`/custom/single/${item.element_id}`}>
+                        <Button
+                          color="#FFF"
+                          mx="auto"
+                          onClick={handleClick}
+                          bg="myYellow"
+                          _hover={{
+                            bg: "#fff",
+                            color: "myYellow",
+                          }}
+                        >
+                          View
+                        </Button>
+                      </Link>
+                    </Flex>
+                  </Flex>
+                </PseudoBox>
+              </>
+            );
+          })}
+        </Stack>
+      </Box>
+      {/* **************************************************************************** stack original */}
+
+      {/* <Stack
+        // bg="#fff"
+        ml=""
+        mt="30px"
+        // maxWidth="3000px"
         spacing={4}
         // mx="auto"
+        // direction="column-reverse"
         isInline
         shouldWrapChildren={true}
         flexWrap="wrap"
+        rounded="md"
       >
         {customs.map((item) => {
           return (
             <>
-              <Box
-                pos="relative"
-                key={item.id}
-                w="450px"
-                h="200px"
-                // border="1px"
-                m={5}
-                p={3}
-                bg="#fff"
-                rounded="md"
-                shadow="lg"
-                // onMouseEnter={() => handleHover(item)}
-                // onMouseLeave={() => handleMouseLeave()}
-              >
-                <Heading fontSize="20px" color="myBlue">
-                  {item.element.title}
-                </Heading>
-                <Divider></Divider>
-                {/* <Heading fontSize="15px" color="myYellow">
-                  Description
-                </Heading> */}
+              <Box width="100%">
+                <Flex
+                  direction="column"
+                  justifyContent="space-between"
+                  pos="relative"
+                  key={item.id}
+                  flex="1"
+                  h="200px"
+                  // border="1px"
 
-                <Text minH="50%" py="10px">
-                  {item.element.description}
-                </Text>
-                <Flex>
-                  <Link to={`/custom/single/${item.element_id}`}>
-                    <Button mx="auto" onClick={handleClick} bg="myYellow">
-                      View
-                    </Button>
-                  </Link>
-                </Flex>
-                {/* <Router>
-                  <Route
-                    exact
-                    path="/custom/single/:id"
-                    render={(props) => (
-                      <SingleCustomPage
-                        {...props}
-                        // loggedInStatus={loggedInStatus}
-                        // handleLogout={handleLogout}
-                      />
-                    )}
-                  />
-                </Router> */}
+                  p={3}
+                  bg="#fff"
+                  rounded="md"
+                  shadow="lg"
+                  // onMouseEnter={() => handleHover(item)}
+                  // onMouseLeave={() => handleMouseLeave()}
+                >
+                  <Box>
+                    <Heading fontSize="20px" color="myBlue">
+                      {item.element.title}
+                    </Heading>
+                    <Divider></Divider>
+             
 
-                {showCode === item.element.id && (
-                  <Box
-                    zIndex="2"
-                    w="80%"
-                    pos="absolute"
-                    p={5}
-                    bg="#011627"
-                    rounded="md"
-                    shadow="xl"
-                    color="#FFF"
-                    mb={5}
-                    h="70%"
-                    top="-20%"
-                    right="-20%"
-                  >
-                    {/* <Button
-                    variantColor="teal"
-                    size="xs"
-                    pos="absolute"
-                    top="10px"
-                    right="10px"
-                  >
-                    Copy
-                  </Button> */}
-                    <Text pl={2} pr="50px" overflowWrap>
-                      {item.element.code}
-                    </Text>
+                    <Box minH="" py="10px" className="bloc">
+                      {item.element.description}
+                    </Box>
                   </Box>
-                )}
+                  <Flex justifyContent="center">
+                    <Link to={`/custom/single/${item.element_id}`}>
+                      <Button mx="auto" onClick={handleClick} bg="myYellow">
+                        View
+                      </Button>
+                    </Link>
+                  </Flex>
 
-                {/* <Text>{item.element.code}</Text> */}
+               
+
+                  {showCode === item.element.id && (
+                    <Box
+                      zIndex="2"
+                      w="80%"
+                      pos="absolute"
+                      p={5}
+                      bg="#011627"
+                      rounded="md"
+                      shadow="xl"
+                      color="#FFF"
+                      mb={5}
+                      h="70%"
+                      top="-20%"
+                      right="-20%"
+                    >
+               
+                      <Text pl={2} pr="50px" overflowWrap>
+                        {item.element.code}
+                      </Text>
+                    </Box>
+                  )}
+
+                 
+                </Flex>
               </Box>
             </>
           );
         })}
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 };

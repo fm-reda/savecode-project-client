@@ -21,86 +21,60 @@ import { FormAddElement } from "./Element/form.AddElement";
 import { FormNewElement } from "./Element/FormNewElement";
 import { CategorySub } from "./Category/CategorySub";
 
-const ManageGallery = () => {
+const ManageGallery = ({ ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Stack>
-        <Box mx="auto" mt="120px" w="1000px">
-          <Button onClick={onOpen}>Trigger modal</Button>
-          <Modal
-            size="lg"
-            onClose={onClose}
-            isOpen={isOpen}
-            isCentered
-            closeOnOverlayClick={false}
-            h="1000px"
-          >
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader fontSize="30px">
-                Congratulation Mr. <Icon name="star" color="#ff9e00" />
-              </ModalHeader>
-              <ModalHeader
-                color="#0297e0"
-                fontWeight="600"
-                lineHeight="50px"
-                fontSize="20px"
-              >
-                The element is in your library now.
-              </ModalHeader>
-              <ModalHeader>
-                <Icon name="star" color="#ff9e00" mx={2} />
-                Title
-                <Icon name="star" color="#ff9e00" mx={2} />
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                {" "}
-                <Box roundedRight="lg" px="10px" align="center" mx="auto">
-                  {/* //Box code */}
-                  <Box
-                    pos="relative"
-                    p={5}
-                    w="80%"
-                    bg="#011627"
-                    rounded="md"
-                    shadow="xl"
-                    color="#FFF"
-                    mb={2}
-                    w="100%"
-                    minH="100px"
-                  >
-                    <Button
-                      variantColor="teal"
-                      size="xs"
-                      pos="absolute"
-                      top="10px"
-                      right="10px"
-                    >
-                      Copy
-                    </Button>
-                    <Text pl={2} pr="50px" overflowWrap>
-                      the code
-                    </Text>
-                  </Box>
-                  <Flex justify="" mb={5}>
-                    <Text mr="100px">Category:</Text>
-                    <Text>Sub-sCategory</Text>
-                  </Flex>
-                  <Box rounded="lg" shadow="lg" minHeight="200px" p={5}>
-                    <Heading fontSize="20px" mb={1} color="#ff9e00">
-                      Description
-                    </Heading>
-                    <Text>some description</Text>
-                  </Box>
-                </Box>
-              </ModalBody>
-              <ModalFooter>
-                <Button>Close</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+      <Stack
+        align="center"
+        ml="15%"
+        mt="10%"
+        p={5}
+        bg="bgGray"
+        h="100vh"
+        className=""
+        isInline
+        spacing={8}
+      >
+        <Box width="100%" height={32} border="1px" mr={2}>
+          <Heading>titile</Heading>
+          <Text>
+            All spacing props accept numbers, strings, or arrays as values,
+            where: Numbers between 0 and the last index of the space array are
+            values from the space array defined in theme Numbers greater than
+            the length of the space array are converted to pixels String values
+            can be used for any valid CSS value (e.g. 'auto' or '2em') Margin
+            props accept negative values to set negative margin Arrays can be
+            used for responsive styles Note: numeric strings without a CSS unit
+            will be used as indices for the array (e.g. space['0'])
+          </Text>
+        </Box>
+        <Box width="100%" height={32} border="1px">
+          <Heading>titile</Heading>
+          <Text>
+            {" "}
+            All spacing props accept numbers, strings, or arrays as values,
+            where: Numbers between 0 and the last index of the space array are
+            values from the space array defined in theme Numbers greater than
+            the length of the space array are converted to pixels String values
+            can be used for any valid CSS value (e.g. 'auto' or '2em') Margin
+            props accept negative values to set negative margin Arrays can be
+            used for responsive styles Note: numeric strings without a CSS unit
+            will be used as indices for the array (e.g. space['0'])
+          </Text>
+        </Box>
+        <Box width="100%" height={32} overflowX="true" border="1px">
+          <Heading>titile</Heading>
+          <Text>
+            All spacing props accept numbers, strings, or arrays as values,
+            where: Numbers between 0 and the last index of the space array are
+            values from the space array defined in theme Numbers greater than
+            the length of the space array are converted to pixels String values
+            can be used for any valid CSS value (e.g. 'auto' or '2em') Margin
+            props accept negative values to set negative margin Arrays can be
+            used for responsive styles Note: numeric strings without a CSS unit
+            will be used as indices for the array (e.g. space['0'])
+          </Text>
         </Box>
       </Stack>
     </>

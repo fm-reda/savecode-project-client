@@ -56,6 +56,7 @@ export const FormNewElement = (props) => {
     }
     //save data in state
     // console.log(e.target.value);
+
     setDatas({ ...datas, [e.target.id]: e.target.value });
     inputChange({ ...datas, [e.target.id]: e.target.value });
     // console.log(datas);

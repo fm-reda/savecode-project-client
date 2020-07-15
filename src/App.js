@@ -36,6 +36,7 @@ import SingleCustom from "./components/Custom-element/SingleCustom";
 import { SingleCustomPage } from "./components/pages/SingleCustomPage";
 import { getCategories } from "./components/Category/CategoryFunctions";
 
+
 const breakpoints = ["360px", "768px", "1024px", "1440px"];
 breakpoints.sm = breakpoints[0];
 breakpoints.md = breakpoints[1];

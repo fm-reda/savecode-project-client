@@ -13,7 +13,14 @@ import {
   AccordionHeader,
   AccordionIcon,
   AccordionPanel,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from "@chakra-ui/core";
+// import { triangle-down } from "react-icons/md"
 import { NavLink, Redirect, Router, Route } from "react-router-dom";
 import Logo from "./../images/Logo/logo5white.png";
 import "../App.css";
@@ -96,13 +103,14 @@ const Navbar2 = (props) => {
 
   const LinkLogout = () => (
     <Flex align="center">
-      <NavLink to="/login">
+      {/* <NavLink to="/login">
         <Button
           mr={2}
-          bg="#ff9e00"
+          bg="#fff"
           border="1px"
           rounded="30px"
-          variantColor="#ff9e00"
+          variantColor="myYellow"
+          color="#000"
           _hover={{ bg: "#b09e50", color: " white" }}
           onClick={() => {
             handleLogout();
@@ -110,16 +118,55 @@ const Navbar2 = (props) => {
         >
           Logout
         </Button>
-      </NavLink>
-      <Avatar
+      </NavLink> */}
+      <Menu>
+        <MenuButton
+          color="#000"
+          p="5px"
+          transition="all 0.2s"
+          rounded="50px"
+          _hover={{ bg: "#14a3e8" }}
+          _expanded={{ bg: "#14a3e8" }}
+          _focus={{ outline: 0, boxShadow: "outline" }}
+        >
+          <Avatar
+            fontSize="50px"
+            mr={2}
+            name="Dan Abrahmov"
+            src={`http://localhost:8000/storage/${localStorage.getItem(
+              "avatar"
+            )}`}
+          />
+          <Icon name="triangle-down" size="15px" mt="18px" color="white" />
+        </MenuButton>
+        <MenuList fontSize="20px" color="#000" bg="#fff" mr={5}>
+          <MenuItem>{localStorage.getItem("name")}</MenuItem>
+          {/* <MenuItem>New Window</MenuItem> */}
+          {/* <MenuDivider /> */}
+          {/* <MenuItem>Open...</MenuItem> */}
+          <MenuDivider />
+          <MenuItem>
+            <NavLink
+              to="/login"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Log out
+            </NavLink>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+      {/* <Avatar
         fontSize="50px"
         mr={2}
         name="Dan Abrahmov"
         src={`http://localhost:8000/storage/${localStorage.getItem("avatar")}`}
       />
+      <Icon name="triangle-down" size="15px" />
       <Text fontSize="15px" fontWeight="500" color="gray.500">
         {localStorage.getItem("name")}
-      </Text>
+      </Text> */}
     </Flex>
   );
   // const handleCh = () => {
@@ -133,11 +180,11 @@ const Navbar2 = (props) => {
         h="100vh"
         // h="300px"
         overflowY="auto"
-        bg="firebase"
+        bg="myBlue"
         w="15%"
         pos="fixed"
         shadow="xl"
-        borderColor="#654552"
+        borderColor="myYellow"
         border="1px"
       >
         {/* // ************************************************ Logos */}
@@ -162,7 +209,7 @@ const Navbar2 = (props) => {
           <Box color="#FFF" w="100%" mb="100px">
             {/* *************************************************Deroulant */}
 
-            <Accordion allowToggle w="100%" mt={5}>
+            <Accordion allowToggle w="100%" mt={2}>
               {categories.map((category, i) => {
                 // _expanded={{ bg: "myYellow", color: "white" }}
                 return (
@@ -170,6 +217,7 @@ const Navbar2 = (props) => {
                     <AccordionItem key={i} bg="">
                       <AccordionHeader
                         _hover={{ bg: "#124154", color: " white" }}
+                        _focus={{ borderColor: "myYellow" }}
                       >
                         <Box flex="1" textAlign="left">
                           {category.title}
@@ -190,14 +238,14 @@ const Navbar2 = (props) => {
                                   w="100%"
                                   bg="#fff"
                                   _active={{
-                                    bg: "#dddfe2",
+                                    bg: "#C4C4C4",
                                     transform: "scale(0.98)",
                                     borderColor: "#000",
                                   }}
                                   _focus={{
-                                    bg: "#dddfe2",
+                                    bg: "#F2F2F2",
                                     transform: "scale(0.98)",
-                                    borderColor: "#000",
+                                    borderColor: "myYellow",
                                   }}
                                   _hover={{ bg: "myYellow", color: " white" }}
                                 >
@@ -217,6 +265,7 @@ const Navbar2 = (props) => {
         </Flex>
       </Box>
       <Box>
+        {/* ********************************************************* navbar design */}
         <Flex
           ml="15%"
           zIndex="2"
@@ -225,8 +274,8 @@ const Navbar2 = (props) => {
           justify="space-between"
           wrap="wrap"
           padding="1.5rem"
-          bg="#FFF"
-          color="black"
+          bg="firebase"
+          color="#fff"
           pos="fixed"
           w="85%"
           boxShadow="lg"
@@ -334,7 +383,7 @@ const Navbar2 = (props) => {
           <Box
             display={{ sm: show ? "block" : "none", md: "block" }}
             mt={{ base: 4, md: 0 }}
-            pr="150px"
+            pr="20px"
           >
             {localStorage.userToken === "" ? <LinkLogin /> : <LinkLogout />}
           </Box>

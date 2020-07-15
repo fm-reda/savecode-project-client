@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-
 }
 
 .break {
@@ -10,7 +9,14 @@
 /* 
 color1:#b5626b
 color:#3a4f73 */
-
+.bloc {
+  text-overflow: "----";
+  /* max-witdth: 200px; */
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -18,7 +24,12 @@ color:#3a4f73 */
 
 .bg-started {
   background: rgb(255, 255, 255);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(124, 186, 217, 1) 15%, rgba(2, 151, 224, 1) 39%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(124, 186, 217, 1) 15%,
+    rgba(2, 151, 224, 1) 39%
+  );
 }
 
 .bg-tab {
@@ -34,15 +45,23 @@ color:#3a4f73 */
   background: linear-gradient(90deg, rgba(236,237,241,1) 0%, rgba(219,229,233,1) 22%, rgba(166,210,231,1) 49%, rgba(219,229,233,1) 72%, rgba(231,232,236,1) 89%); */
   /* background-color: #fff; */
   background: rgb(236, 237, 241);
-  background: linear-gradient(90deg, rgba(236, 237, 241, 1) 40%, rgba(233, 214, 182, 1) 68%, rgba(242, 207, 148, 1) 89%, rgba(249, 180, 69, 1) 100%);
-
-
-
+  background: linear-gradient(
+    90deg,
+    rgba(236, 237, 241, 1) 40%,
+    rgba(233, 214, 182, 1) 68%,
+    rgba(242, 207, 148, 1) 89%,
+    rgba(249, 180, 69, 1) 100%
+  );
 }
 
 .bg-laravel {
-  background: rgb(236,237,241);
-  background: linear-gradient(90deg, rgba(236,237,241,1) 35%, rgba(255,132,125,1) 83%, rgb(250, 86, 77) 98%);
+  background: rgb(236, 237, 241);
+  background: linear-gradient(
+    90deg,
+    rgba(236, 237, 241, 1) 35%,
+    rgba(255, 132, 125, 1) 83%,
+    rgb(250, 86, 77) 98%
+  );
   /* background: rgb(236,237,241);
 background: linear-gradient(270deg, rgba(236,237,241,1) 35%, rgba(255,132,125,1) 83%, rgba(255,45,32,1) 98%); */
 }
@@ -68,8 +87,6 @@ background: linear-gradient(270deg, rgba(236,237,241,1) 35%, rgba(255,132,125,1)
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-
 
 .App-link {
   color: #61dafb;

@@ -179,10 +179,10 @@ const NewElementPage = (props) => {
               });
               // responseElement(res.data.success);
               toast({
-                title: "Element created.",
+                title: `Element ${datas.title} created.`,
                 description: "We've created your code element for you.",
                 status: "success",
-                duration: 2000,
+                duration: 10000,
                 isClosable: true,
                 position: "top",
               });

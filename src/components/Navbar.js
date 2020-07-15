@@ -217,7 +217,7 @@ const Navbar = (props) => {
       <Box
         display={{ sm: show ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
-        pr="150px"
+        pr="20px"
       >
         {localStorage.userToken === "" ? <LinkLogin /> : <LinkLogout />}
 
