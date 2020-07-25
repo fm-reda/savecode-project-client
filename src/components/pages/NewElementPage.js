@@ -251,7 +251,10 @@ const NewElementPage = (props) => {
     onClose();
   };
   return (
-    <Stack bg="#eee" h="100vh">
+    <Stack bg="#eee"
+    //  h="100vh"
+    pb="100px"
+     >
       <Stack ml="20%" mt="10%" mx="auto">
         {showModalCat && (
           <ModalCategory

@@ -1,9 +1,22 @@
 .App {
   text-align: center;
 }
+a {
+  text-decoration: none !important;
+}
+a:hover {
+  color: #ff9e00 !important;
+}
 
 .break {
   word-break: break-all;
+}
+.button:hover {
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: coral !important;
 }
 
 /* 

@@ -19,7 +19,12 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
+  InputGroup,
+  InputLeftElement,
+  Input,
 } from "@chakra-ui/core";
+// import { Button1 } from "react-bootstrap";
+
 // import { triangle-down } from "react-icons/md"
 import { NavLink, Redirect, Router, Route } from "react-router-dom";
 import Logo from "./../images/Logo/logo5white.png";
@@ -38,6 +43,7 @@ const MenuItems = ({ children }) => (
 const LinkLogin = ({ children }) => (
   <>
     <NavLink to="/Login">
+      {/* <Button1 variant="primary">Primary</Button1>{" "} */}
       <Button
         color="#000"
         mr={2}
@@ -49,23 +55,30 @@ const LinkLogin = ({ children }) => (
         Log in
       </Button>
     </NavLink>
-    <NavLink to="/register">
+    <Link to="/register">
       <Button
         mr={2}
         bg="#ff9e00"
-        border="1px"
+        // border="1px"
         rounded="30px"
-        variantColor="#ff9e00"
+        // variantColor="#ff9e00"
         _hover={{ bg: "#66709b", color: " white" }}
       >
         Sign Up
       </Button>
-    </NavLink>
+    </Link>
   </>
 );
 
 const Navbar2 = (props) => {
-  const categoriesProps = useContext(categoriesContext);
+  // const categoriesProps = useContext(categoriesContext);
+  const { categoriesProps } = props;
+
+  // if (categoriesProps == "") {
+  //   console.log("no categories");
+  // } else console.log("jat");
+  // console.log(categoriesProps);
+  const [search, setSearch] = useState("");
 
   setTimeout(() => {
     // console.log(categoriesProps.success.categories);
@@ -86,9 +99,18 @@ const Navbar2 = (props) => {
 
   const handleToggle = () => setShow(!show);
   useEffect(() => {
-    if (categoriesProps.success) {
+    // if (!categoriesProps == undefined) {
+    //   if (!categoriesProps.success == "") {
+    //     console.log("effect");
+    //     setCategories(categoriesProps.success.categories);
+    //   }
+    // }
+
+    if (!categoriesProps.success == "") {
+      // console.log("effect");
       setCategories(categoriesProps.success.categories);
     }
+
     // console.log(categoriesProps.success);
     // setCategoriesTab(categoriesProps.success.categories);
     // rendering();
@@ -169,9 +191,26 @@ const Navbar2 = (props) => {
       </Text> */}
     </Flex>
   );
-  // const handleCh = () => {
-  //   console.log("tets");
-  // };
+  const handleKeyPress = (e) => {
+    if (e.charCode == 13) {
+      // setSearch(e.target.value);
+      handleSubmit(e);
+    }
+    // console.log(e.target.value);
+  };
+  const handleChange = (e) => {
+    // event.preventDefault();t
+    // if (e.keyCode === 13) {
+    //   console.log(e.target.value);
+    // }
+    // console.log(e.target.value);
+    setSearch(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    // console.log(search);
+    props.history.push("/search/element/" + search);
+  };
 
   return (
     // ******************************************************sidebar
@@ -206,9 +245,8 @@ const Navbar2 = (props) => {
         </NavLink>
         <Flex>
           <Divider color="#fff" />
+          {/* *************************************************Deroulant */}
           <Box color="#FFF" w="100%" mb="100px">
-            {/* *************************************************Deroulant */}
-
             <Accordion allowToggle w="100%" mt={2}>
               {categories.map((category, i) => {
                 // _expanded={{ bg: "myYellow", color: "white" }}
@@ -327,6 +365,17 @@ const Navbar2 = (props) => {
           </NavLink>
         </MenuItems> */}
             <MenuItems>
+              <NavLink to="/">
+                <Box
+                  className={props.location.pathname === "/" ? "current" : ""}
+                  p={2}
+                  rounded="md"
+                >
+                  Home
+                </Box>
+              </NavLink>
+            </MenuItems>
+            <MenuItems>
               <NavLink to="/new-element">
                 <Box
                   className={
@@ -365,19 +414,34 @@ const Navbar2 = (props) => {
                 </Box>
               </NavLink>
             </MenuItems>
-            <MenuItems>
-              <NavLink to="/">
-                <Box
-                  className={
-                    props.location.pathname === "/home" ? "current" : ""
-                  }
-                  p={2}
-                  rounded="md"
-                >
-                  Home
-                </Box>
-              </NavLink>
-            </MenuItems>
+            {/* ************************************************ Search bar  */}
+            <Flex
+              ml="80px"
+              //  bg="#fff"
+            >
+              <Input
+                color="#000"
+                w="300px"
+                type="phone"
+                placeholder="Search"
+                rounded="0"
+                roundedLeft="md"
+                onChange={(e) => handleChange(e)}
+                onKeyPress={handleKeyPress}
+              />
+              <Button
+                bg="myYellow"
+                roundedLeft="0"
+                onClick={(e) => handleSubmit(e)}
+              >
+                <Icon name="search" color="#000" />
+              </Button>
+            </Flex>
+            {/* <InputGroup>
+                <InputLeftElement
+                  children={<Icon name="search" color="gray.300" />}
+                />
+              </InputGroup> */}
           </Box>
 
           <Box

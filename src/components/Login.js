@@ -81,8 +81,7 @@ const Login = (props) => {
 
                   // console.log(res);
                   if (res && res.status == 200) {
-                    localStorage.setItem("name", res.data.user.name);
-                    localStorage.setItem("avatar", res.data.user.avatar);
+                    
                     goRedirect();
                   } else if (res && res.status == 401) {
                     setShowAlert(true);

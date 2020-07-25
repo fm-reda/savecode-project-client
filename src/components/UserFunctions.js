@@ -31,6 +31,9 @@ export const login = (user) => {
     )
     .then((res) => {
       localStorage.setItem("userToken", res.data.access_token);
+      localStorage.setItem("user_id", res.data.user.id);
+      localStorage.setItem("name", res.data.user.name);
+      localStorage.setItem("avatar", res.data.user.avatar);
       console.log(res);
 
       return res;

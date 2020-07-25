@@ -35,6 +35,7 @@ const customTheme = {
     react: "#61dafb91",
     javascript: "#f0d91d91",
     github: "#24292e91",
+    code:"#011627"
   },
   breakpoints,
 };

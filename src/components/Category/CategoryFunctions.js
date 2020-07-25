@@ -16,6 +16,7 @@ export const getCategories = async () => {
     })
     .catch((err) => {
       console.log(err);
+      return err.response;
     });
 };
 

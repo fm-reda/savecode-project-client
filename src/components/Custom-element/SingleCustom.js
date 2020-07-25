@@ -61,7 +61,7 @@ const SingleCustom = (props) => {
     // console.log("clicked");
   };
   return (
-    <Stack ml="15%" mt="4%" p={5} bg="bgGray" h="100vh" className="">
+    <Stack ml="15%" mt="4%" p={5} bg="bgGray" minH="710px" className="">
       <Box mx="auto" w="100%">
         <Box
           p={5}
@@ -71,7 +71,7 @@ const SingleCustom = (props) => {
           bg="#fff"
           // w="110%"
           // ml="-20px"
-          mt="6%"
+          mt="4%"
           // mt={5}
           color="#000"
           rounded="lg"
@@ -99,7 +99,7 @@ const SingleCustom = (props) => {
       </Flex> */}
 
         <Stack
-          justifyContent="center"
+          // justifyContent="center"
           align="center"
           mt="3%"
           bg="bgGray"
@@ -107,6 +107,7 @@ const SingleCustom = (props) => {
           className=""
           isInline
           // width="1430px"
+          // w="100%"
 
           shouldWrapChildren={true}
           flexWrap="wrap"
@@ -121,7 +122,8 @@ const SingleCustom = (props) => {
                   shadow="lg"
                   p={3}
                   bg="#fff"
-                  width="363px"
+                  width="430px"
+                  // width="30%"
                   mb={5}
                   mx={3}
                   _hover={{
@@ -139,11 +141,13 @@ const SingleCustom = (props) => {
                     <Box>
                       <Heading fontSize="20px">
                         {" "}
-                        {item.element.title.substring(0, 30) + "..."}
+                        {item.element.title.substring(0, 30) +
+                          (item.element.title.length > 29 ? "..." : "")}
                       </Heading>
                       <Divider></Divider>
                       <Box>
-                        {item.element.description.substring(0, 100) + "..."}
+                        {item.element.description.substring(0, 80) +
+                          (item.element.description.length > 80 ? "..." : "")}
                       </Box>
                     </Box>
                     <Flex justifyContent="center">

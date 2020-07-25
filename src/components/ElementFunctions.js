@@ -48,7 +48,7 @@ export const getDefaultCategories = () => {
 };
 
 export const singleElement = (id) => {
-  console.log(id);
+  // console.log(id);
   return axios
     .get(url + `api/v1/elements/${id}`, {
       headers: {
@@ -64,4 +64,25 @@ export const singleElement = (id) => {
       return err.response;
       console.log(err);
     });
-  }
+};
+export const searchWord = (newSearch) => {
+  console.log(newSearch);
+
+  // return localStorage.getItem("userToken");
+
+  return axios
+    .post(url + "api/v1/elements/search", newSearch, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      // console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+      console.log(err);
+    });
+};

@@ -35,7 +35,9 @@ import NewElementPage from "./components/pages/NewElementPage";
 import SingleCustom from "./components/Custom-element/SingleCustom";
 import { SingleCustomPage } from "./components/pages/SingleCustomPage";
 import { getCategories } from "./components/Category/CategoryFunctions";
-
+import { SearchElement } from "./components/Element/SearchElement";
+import SearchPage from "./components/Element/SearchPage";
+// import { searchElement } from "./components/ElementFunctions";
 
 const breakpoints = ["360px", "768px", "1024px", "1440px"];
 breakpoints.sm = breakpoints[0];
@@ -64,11 +66,19 @@ function App(props) {
   useEffect(() => {
     if (localStorage.getItem("userToken") && !startedTime) {
       setLoggedInStatus(true);
+      console.log(localStorage);
       getCategories().then((res) => {
-        if (res) {
+        if (res && res.status == 200) {
           setCategories(res.data);
           console.log(res);
+          // console.log(res.status);
           // setCategories(res.data.success.categories);
+        } else if (res && res.status === 401) {
+          console.log("autorisation");
+          // localStorage.setItem('userToken',"")
+          handleLogout();
+        } else {
+          handleLogout();
         }
       });
       // setUrl("home");
@@ -186,7 +196,7 @@ function App(props) {
                         loggedInStatus={loggedInStatus}
                         handleLogout={handleLogout}
                         rendering={rendering}
-                        categories={categories}
+                        categoriesProps={categories}
                       />
                     )}
                   />
@@ -327,6 +337,17 @@ function App(props) {
                     path="/custom/single/:id"
                     render={(props) => (
                       <SingleCustomPage
+                        {...props}
+                        // loggedInStatus={loggedInStatus}
+                        // handleLogout={handleLogout}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/search/element/:search"
+                    render={(props) => (
+                      <SearchPage
                         {...props}
                         // loggedInStatus={loggedInStatus}
                         // handleLogout={handleLogout}

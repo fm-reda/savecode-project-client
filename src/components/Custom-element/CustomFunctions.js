@@ -61,3 +61,22 @@ export const singleElement = (id) => {
       console.log(err);
     });
 };
+export const customDelete = (id) => {
+  console.log(id);
+
+  return axios
+    .delete(url + `api/v1/customs/${id}`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+      console.log(err);
+    });
+};
