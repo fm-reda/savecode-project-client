@@ -69,6 +69,49 @@ export const profile = async () => {
     });
 };
 
+export const uploadAvatar = (formData) => {
+  // console.log(newElement);
+
+  console.log(localStorage.getItem("userToken"));
+
+  return axios
+    .post(url + "api/v1/userAvatar", formData, {
+      headers: {
+        "content-type": "application/json",
+
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+      console.log(err);
+    });
+};
+export const updateUser = (userInfo) => {
+  // console.log(newElement);
+
+  return axios
+    .post(url + "api/v1/updateUser", userInfo, {
+      headers: {
+        "content-type": "application/json",
+
+        Authorization: `Bearer ${localStorage.userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+      console.log(err);
+    });
+};
+
 // download file function
 
 // export const download = async () => {

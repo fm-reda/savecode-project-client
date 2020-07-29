@@ -33,7 +33,7 @@ import { categoriesContext } from "../App";
 import { useEffect } from "react";
 import { LoginPage } from "./pages/LoginPage";
 import NewElementPage from "./pages/NewElementPage";
-import Profile from "./Profile";
+import Profile from "./Not-use/Profile1";
 import { getCategories } from "./Category/CategoryFunctions";
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -145,24 +145,30 @@ const Navbar2 = (props) => {
         <MenuButton
           color="#000"
           p="5px"
+          pl="20px"
           transition="all 0.2s"
           rounded="50px"
-          _hover={{ bg: "#14a3e8" }}
+          // _hover={{ bg: "#14a3e8" }}
           _expanded={{ bg: "#14a3e8" }}
-          _focus={{ outline: 0, boxShadow: "outline" }}
+          _focus={{
+            outline: 0,
+            //  boxShadow: "outline"
+          }}
         >
           <Avatar
             fontSize="50px"
             mr={2}
             name="Dan Abrahmov"
-            src={`http://localhost:8000/storage/${localStorage.getItem(
+            src={`http://localhost:8000/storage/users/${localStorage.getItem(
               "avatar"
             )}`}
           />
           <Icon name="triangle-down" size="15px" mt="18px" color="white" />
         </MenuButton>
         <MenuList fontSize="20px" color="#000" bg="#fff" mr={5}>
-          <MenuItem>{localStorage.getItem("name")}</MenuItem>
+          <MenuItem>
+            <NavLink to="/profile">{localStorage.getItem("name")}</NavLink>
+          </MenuItem>
           {/* <MenuItem>New Window</MenuItem> */}
           {/* <MenuDivider /> */}
           {/* <MenuItem>Open...</MenuItem> */}
@@ -254,11 +260,11 @@ const Navbar2 = (props) => {
                   <>
                     <AccordionItem key={i} bg="">
                       <AccordionHeader
-                        _hover={{ bg: "#124154", color: " white" }}
+                        _hover={{ bg: "#124154", color: "" }}
                         _focus={{ borderColor: "myYellow" }}
                       >
                         <Box flex="1" textAlign="left">
-                          {category.title}
+                          {category.title} ({category.sub_categories.length})
                         </Box>
                         <AccordionIcon />
                       </AccordionHeader>
@@ -285,9 +291,9 @@ const Navbar2 = (props) => {
                                     transform: "scale(0.98)",
                                     borderColor: "myYellow",
                                   }}
-                                  _hover={{ bg: "myYellow", color: " white" }}
+                                  _hover={{ bg: "myYellow", color: "" }}
                                 >
-                                  {item.title}
+                                  {item.title} ({item.customs.length})
                                 </Button>
                               </AccordionPanel>
                             </NavLink>
@@ -389,15 +395,17 @@ const Navbar2 = (props) => {
               </NavLink>
             </MenuItems>
             <MenuItems>
-              <NavLink to="/manage">
+              <NavLink to="/gestion-categories">
                 <Box
                   className={
-                    props.location.pathname === "/manage" ? "current" : ""
+                    props.location.pathname === "/gestion-categories"
+                      ? "current"
+                      : ""
                   }
                   p={2}
                   rounded="md"
                 >
-                  Manage
+                  Categories
                 </Box>
               </NavLink>
             </MenuItems>

@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 // import NavbarLog from "./components/NavbarOut.js";
 import GetStarted from "./components/GetStarted";
 import { UploadFile } from "./components/UploadFile";
-import Profile from "./components/Profile";
+
 import Register from "./components/Register";
 import ManageGallery from "./components/ManageGallery";
 import {
@@ -25,7 +25,7 @@ import {
 // import Uploader from "./components/Not-use/Galery-photo/Uploader";
 import { Error } from "./components/Error";
 import customTheme from "./themes";
-import { login } from "./components/UserFunctions";
+import { login, profile } from "./components/UserFunctions";
 import { RegisterPage } from "./components/pages/RegisterPage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { Home } from "./components/pages/Home";
@@ -37,6 +37,8 @@ import { SingleCustomPage } from "./components/pages/SingleCustomPage";
 import { getCategories } from "./components/Category/CategoryFunctions";
 import { SearchElement } from "./components/Element/SearchElement";
 import SearchPage from "./components/Element/SearchPage";
+import { Profile } from "./components/pages/Profile";
+import { GestionCategories } from "./components/pages/GestionCategories";
 // import { searchElement } from "./components/ElementFunctions";
 
 const breakpoints = ["360px", "768px", "1024px", "1440px"];
@@ -54,6 +56,7 @@ export const LogContext = React.createContext();
 export const LogStatusContext = React.createContext();
 export const categoriesContext = React.createContext();
 function App(props) {
+  console.log("apppppppppppppppppppppppppppppppppppppppppppppppppppp");
   const [loggedInStatus, setLoggedInStatus] = useState(null);
   // console.log(loggedInStatus);
   // console.log(loggedInStatus);
@@ -354,6 +357,28 @@ function App(props) {
                       />
                     )}
                   />
+                  <Route
+                    exact
+                    path="/profile"
+                    render={(props) => (
+                      <Profile
+                        {...props}
+                        // loggedInStatus={loggedInStatus}
+                        // handleLogout={handleLogout}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/gestion-categories"
+                    render={(props) => (
+                      <GestionCategories
+                        {...props}
+                        // loggedInStatus={loggedInStatus}
+                        // handleLogout={handleLogout}
+                      />
+                    )}
+                  />
                   {/* <Route
                 exact
                 path="/get-started"
@@ -366,7 +391,7 @@ function App(props) {
                 )}
               /> */}
                   {/* <Route exact path="/" component={Landing}></Route> */}
-                  <Route exact path="/profile" component={Profile}></Route>
+                  {/* <Route exact path="/profile" component={Profile}></Route> */}
                   <Route exact path="/manage" component={ManageGallery}></Route>
                   <Route exact path="/upload" component={UploadFile}></Route>
 

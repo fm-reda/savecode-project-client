@@ -17,6 +17,7 @@ import {
   AlertDialogFooter,
   Divider,
   useDisclosure,
+  useClipboard,
 } from "@chakra-ui/core";
 // import { singleCustom } from "../Custom-element/CustomFunctions";
 import { singleElement } from "../ElementFunctions";
@@ -27,6 +28,7 @@ import {
 } from "../Custom-element/CustomFunctions";
 import ModalAddCustom from "../Custom-element/ModalAddCustom";
 import { LogStatusContext } from "../../App";
+import { Redirect } from "react-router-dom";
 
 export const SingleCustomPage = (props) => {
   const rendering = useContext(LogStatusContext);
@@ -54,6 +56,9 @@ export const SingleCustomPage = (props) => {
   const [delLoading, setDelLoading] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [elementUser_id, setElementUser_id] = useState("");
+  // const [value, setValue] = React.useState("Hello world");
+  const { onCopy, hasCopied } = useClipboard(code);
+
   //   console.log(id);
   useEffect(() => {
     singleElement(id).then((res) => {
@@ -133,265 +138,275 @@ export const SingleCustomPage = (props) => {
     setShowModalAdd(false);
     // });
   };
+  const handleCopy = () => {
+    onCopy();
+  };
 
   return (
-    <Stack ml="15%" mt="5%" p={5} bg="bgGray" className="">
-      {/* ******************************************************* Modal ADD */}
-      {showModalAdd && (
-        <ModalAddCustom
-          onOpen={onOpen}
-          onClose={onClose}
-          isOpen={isOpen}
-          addCustom={addCustom}
-          category={defaultCategory}
-          subCategory={subCategory}
-          element_id={id}
-        />
-      )}
-
-      {/* ******************************************************* Alert delete */}
-
-      <AlertDialog
-        isOpen={isOpenD}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Element
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You want remove this element from library.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              variantColor="red"
-              onClick={handleDelete}
-              ml={3}
-              isLoading={delLoading}
-              loadingText="Please wait ..."
-            >
-              Delete
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-      <Flex
-        // w="1000px"
-        w="80%"
-        mx="auto"
-        bg=""
-        mt={5}
-        p={5}
-        justifyContent="space-around"
-      >
-        {/* ******************************************************* Single Element */}
-
-        <Box bg="#fff" p={5} shadow="lg" rounded="lg" width="60%">
-          {requestStatus ? (
-            <>
-              <Heading mb={5} color="myYellow">
-                {title}
-              </Heading>
-              <Divider></Divider>
-              <Heading fontSize="25px" mb={3}>
-                Element code
-              </Heading>
-              <Box
-                // mx="auto"
-                w="90%"
-                pos="relative"
-                p={5}
-                bg="#011627"
-                rounded="md"
-                shadow="xl"
-                color="#FFF"
-                mb={5}
-              >
-                <Button
-                  variantColor="teal"
-                  size="xs"
-                  pos="absolute"
-                  top="10px"
-                  right="10px"
-                >
-                  Copy
-                </Button>
-                <Text minH="100px" pl={2} pr="50px" overflowWrap>
-                  {code}
-                </Text>
-              </Box>
-              <Divider></Divider>
-              <Heading fontSize="25px" mb={3}>
-                Description:
-              </Heading>
-              <Text mb={5} minH="150px" p={5}>
-                {description}
-              </Text>
-            </>
-          ) : (
-            <>
-              <Heading mb={5} color="myYellow">
-                Title
-              </Heading>
-              <Skeleton
-                colorStart="#fff"
-                colorEnd="orange"
-                height="20px"
-                mb={5}
-              />
-              <Heading mb={5} fontSize="25px">
-                Description
-              </Heading>
-              <Skeleton
-                colorStart="#fff"
-                colorEnd="#CCC"
-                height="50px"
-                mb={5}
-              />
-              <Heading fontSize="25px" mb={5}>
-                Code
-              </Heading>
-              <Skeleton
-                colorStart="#fff"
-                colorEnd="#011627"
-                height="50px"
-                mb={5}
-              />
-            </>
+    <>
+      {!localStorage.userToken ? (
+        <Redirect to="/login" />
+      ) : (
+        <Stack ml="15%" mt="5%" p={5} bg="bgGray" className="" h="100vh">
+          {/* ******************************************************* Modal ADD */}
+          {showModalAdd && (
+            <ModalAddCustom
+              onOpen={onOpen}
+              onClose={onClose}
+              isOpen={isOpen}
+              addCustom={addCustom}
+              category={defaultCategory}
+              subCategory={subCategory}
+              element_id={id}
+            />
           )}
-        </Box>
 
-        {/* ******************************************************* Created by */}
-        <Box width="30%">
-          <Flex
-            direction="column"
-            w="250PX"
-            fontSize="18px"
-            fontWeight="600"
-            top="5%"
-            right="3%"
-            shadow="lg"
-            rounded="md"
-            bg="#fff"
-            color="#121"
-            // align="center"
-            justifyContent="center"
-            textDecoration="left"
-            mb={5}
+          {/* ******************************************************* Alert delete */}
+
+          <AlertDialog
+            isOpen={isOpenD}
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
           >
-            <Box bg="myYellow" w="100" color="white" p={2} roundedTop="lg">
-              Created By
-            </Box>
-            <Box p={5}>
-              {/* ************************************* Spinner */}
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Delete Element
+              </AlertDialogHeader>
 
+              <AlertDialogBody>
+                Are you sure? You want remove this element from library.
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button
+                  variantColor="red"
+                  onClick={handleDelete}
+                  ml={3}
+                  isLoading={delLoading}
+                  loadingText="Please wait ..."
+                >
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Flex
+            // w="1000px"
+            w="70%"
+            mx="auto"
+            bg=""
+            mt={5}
+            p={5}
+            justifyContent="space-around"
+          >
+            {/* ******************************************************* Single Element */}
+
+            <Box bg="#fff" p={5} shadow="lg" rounded="lg" flex="3" mr={5}>
               {requestStatus ? (
                 <>
-                  <Flex align="center" mb={3}>
-                    <Avatar
-                      fontSize="50px"
-                      mr={2}
-                      name="Dan Abrahmov"
-                      src={`http://localhost:8000/storage/${avatarUser}`}
-                    />
-                    <Text fontSize="20px" color="myBlue" mb={3}>
-                      {localStorage.name === creator ? "You" : creator}
+                  <Heading mb={5} color="myYellow">
+                    {title}
+                  </Heading>
+                  <Divider mb={5}></Divider>
+                  <Heading fontSize="20px" mb={3}>
+                    Element code
+                  </Heading>
+                  <Box
+                    // mx="auto"
+                    w="90%"
+                    pos="relative"
+                    p={5}
+                    bg="#011627"
+                    rounded="md"
+                    shadow="xl"
+                    color="#FFF"
+                    mb={5}
+                    // mx="auto"
+                  >
+                    <Button
+                      variantColor="teal"
+                      size="md"
+                      pos="absolute"
+                      top="10px"
+                      right="10px"
+                      onClick={handleCopy}
+                    >
+                      {hasCopied ? "Copied" : "Copy"}
+                    </Button>
+                    <Text minH="100px" pl={2} pr="50px" overflowWrap>
+                      {code}
                     </Text>
-                  </Flex>
-
-                  <Text>Category : {defaultCategory}</Text>
+                  </Box>
+                  <Divider></Divider>
+                  <Heading fontSize="25px" mb={2}>
+                    Description:
+                  </Heading>
+                  <Text mb={5} minH="150px" p={5}>
+                    {description}
+                  </Text>
                 </>
               ) : (
-                <Spinner />
+                <>
+                  <Heading mb={5} color="myYellow">
+                    Title
+                  </Heading>
+                  <Skeleton
+                    colorStart="#fff"
+                    colorEnd="orange"
+                    height="20px"
+                    mb={5}
+                  />
+                  <Heading mb={5} fontSize="25px">
+                    Description
+                  </Heading>
+                  <Skeleton
+                    colorStart="#fff"
+                    colorEnd="#CCC"
+                    height="50px"
+                    mb={5}
+                  />
+                  <Heading fontSize="25px" mb={5}>
+                    Code
+                  </Heading>
+                  <Skeleton
+                    colorStart="#fff"
+                    colorEnd="#011627"
+                    height="50px"
+                    mb={5}
+                  />
+                </>
               )}
+            </Box>
 
-              {/* <Flex>
+            {/* ******************************************************* Created by */}
+            <Box flex="1">
+              <Flex
+                direction="column"
+                fontSize="18px"
+                fontWeight="600"
+                top="5%"
+                right="3%"
+                shadow="lg"
+                rounded="md"
+                bg="#fff"
+                color="#121"
+                // align="center"
+                justifyContent="center"
+                textDecoration="left"
+                mb={5}
+              >
+                <Box bg="myYellow" w="100" color="white" p={2} roundedTop="lg">
+                  Created By
+                </Box>
+                <Box p={5}>
+                  {/* ************************************* Spinner */}
+
+                  {requestStatus ? (
+                    <>
+                      <Flex align="center" mb={3}>
+                        <Avatar
+                          fontSize="50px"
+                          mr={2}
+                          name="Dan Abrahmov"
+                          src={`http://localhost:8000/storage/users/${avatarUser}`}
+                        />
+                        <Text fontSize="20px" color="myBlue" mb={3}>
+                          {localStorage.name === creator ? "You" : creator}
+                        </Text>
+                      </Flex>
+
+                      <Text>Category : {defaultCategory}</Text>
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+
+                  {/* <Flex>
                 <Button variantColor="green">Edit</Button>
                 <Button bg="#C53030">Del</Button>
               </Flex> */}
-            </Box>
-          </Flex>
-          {/* ******************************************************* Library */}
+                </Box>
+              </Flex>
+              {/* ******************************************************* Library */}
 
-          <Flex
-            direction="column"
-            w="250PX"
-            fontSize="18px"
-            fontWeight="600"
-            top="5%"
-            right="3%"
-            shadow="lg"
-            rounded="md"
-            bg="#fff"
-            color="#121"
-            // align="center"
-            justifyContent="center"
-            textDecoration="left"
-          >
-            <Box bg="myBlue" w="100" p={2} color="white" roundedTop="lg">
-              Library
-            </Box>
-            <Box p={5}>
-              {requestStatus ? (
-                <>
-                  {/* ****************************** in Library TEST */}
-                  {inLibrary ? (
+              <Flex
+                direction="column"
+                // w="250PX"
+                fontSize="18px"
+                fontWeight="600"
+                top="5%"
+                right="3%"
+                shadow="lg"
+                rounded="md"
+                bg="#fff"
+                color="#121"
+                // align="center"
+                justifyContent="center"
+                textDecoration="left"
+              >
+                <Box bg="myBlue" w="100" p={2} color="white" roundedTop="lg">
+                  Library
+                </Box>
+                <Box p={5}>
+                  {requestStatus ? (
                     <>
-                      <Text>Category : {category}</Text>
-                      <Text mb={3}>sub : {subCategory}</Text>
-                      <Flex justifyContent="center">
-                        <Button
-                          variantColor="green"
-                          mr={2}
-                          w="40%"
-                          onClick={() => setIsOpenD(true)}
-                        >
-                          Remove
-                        </Button>
-                        {/* {localStorage.user_id == elementUser_id && (
+                      {/* ****************************** in Library TEST */}
+                      {inLibrary ? (
+                        <>
+                          <Text>Category : {category}</Text>
+                          <Text mb={5}>sub : {subCategory}</Text>
+                          <Flex justifyContent="center">
+                            <Button
+                              variantColor="green"
+                              mr={2}
+                              w="40%"
+                              onClick={() => setIsOpenD(true)}
+                            >
+                              Remove
+                            </Button>
+                            {/* {localStorage.user_id == elementUser_id && (
                           <Button bg="#C53030" w="40%">
                             Edit
                           </Button>
                         )} */}
-                      </Flex>
+                          </Flex>
+                        </>
+                      ) : (
+                        <>
+                          <Text mb={3}>This element not in your library!</Text>
+
+                          <Flex justifyContent="center">
+                            <Button
+                              variantColor="green"
+                              mr={2}
+                              w="40%"
+                              onClick={handleAdd}
+                            >
+                              Add
+                            </Button>
+                            {/* {inLibrary && (
+                          <Button bg="#C53030" w="40%">
+                            Edit
+                          </Button>
+                        )} */}
+                          </Flex>
+                        </>
+                      )}
                     </>
                   ) : (
-                    <>
-                      <Text mb={3}>This element not in your library!</Text>
-
-                      <Flex justifyContent="center">
-                        <Button
-                          variantColor="green"
-                          mr={2}
-                          w="40%"
-                          onClick={handleAdd}
-                        >
-                          Add
-                        </Button>
-                        {/* {inLibrary && (
-                          <Button bg="#C53030" w="40%">
-                            Edit
-                          </Button>
-                        )} */}
-                      </Flex>
-                    </>
+                    <Spinner />
                   )}
-                </>
-              ) : (
-                <Spinner />
-              )}
+                </Box>
+                {/* <Text>{single.custom.title}</Text> */}
+              </Flex>
             </Box>
-            {/* <Text>{single.custom.title}</Text> */}
           </Flex>
-        </Box>
-      </Flex>
-    </Stack>
+        </Stack>
+      )}
+    </>
   );
 };

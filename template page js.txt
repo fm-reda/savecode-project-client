@@ -1,0 +1,62 @@
+import React, { useState, useEffect } from "react";
+import { Stack, Box, Heading, Flex, Spinner } from "@chakra-ui/core";
+import { Redirect } from "react-router-dom";
+import { getCategories } from "./../Category/CategoryFunctions";
+
+export const GestionCategories = () => {
+  const [categories, setCategories] = useState([]);
+  const [requestStatusCategories, setRequestStatusCategories] = useState(true);
+  useEffect(() => {
+    setRequestStatusCategories(false);
+    getCategories().then((res) => {
+      if (res && res.status == 200) {
+        setCategories(res.data);
+        setRequestStatusCategories(false);
+        //   console.log(res);
+        // console.log(res.status);
+        // setCategories(res.data.success.categories);
+      } else if (res && res.status === 401) {
+        console.log("autorisation");
+        // localStorage.setItem('userToken',"")
+      }
+    });
+  }, []);
+  return (
+    <>
+      {!localStorage.userToken ? (
+        <Redirect to="/login" />
+      ) : (
+        <Stack ml="15%" mt="5%" p={5} bg="bgGray" className="" h="100vh">
+          <Box>hello from categories</Box>
+          {requestStatusCategories ? (
+            <Flex
+              justifyContent="center"
+              h="50vh"
+              align="center"
+              // pt="50px"
+              bg="#FFF"
+            >
+              <Box>
+                <Heading color="myYellow" mb={3}>
+                  Searching elements, Please wait...
+                </Heading>
+                <Flex justifyContent="center">
+                  <Spinner
+                    textAlign="center"
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="100px"
+                  />
+                </Flex>
+              </Box>
+            </Flex>
+          ) : (
+            <Heading>result categories</Heading>
+          )}
+        </Stack>
+      )}
+    </>
+  );
+};

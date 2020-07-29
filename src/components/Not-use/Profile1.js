@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { profile, download } from "./UserFunctions";
+import { profile, download } from "../UserFunctions";
 import {
   Text,
   Box,

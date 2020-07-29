@@ -25,6 +25,7 @@ import { LogStatusContext } from "../../App";
 import ModalCategory from "../Category/ModalCategory";
 import ModalSubCategory from "../Category/ModalSubCategory";
 import { createSubCategory } from "../Category/SubCategoryFunctions";
+import { Redirect } from "react-router-dom";
 
 const NewElementPage = (props) => {
   const rendering = useContext(LogStatusContext);
@@ -46,7 +47,7 @@ const NewElementPage = (props) => {
   const [showModalSub, setShowModalSub] = useState(false);
   const [showModalCat, setShowModalCat] = useState(false);
   const [showInputCat, setShowInputCat] = useState(false);
-  const [category, setCategory] = useState("laravel");
+  const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [renderNewElement, setRenderNewElement] = useState(false);
   const [fromNewElement, setFromNewElement] = useState(true);
@@ -76,6 +77,7 @@ const NewElementPage = (props) => {
   useEffect(() => {
     getCategories().then((res) => {
       if (res) {
+        setCategory(res.data.success.categories[0].title);
         setCategories(res.data.success.categories);
         res.data.success.categories.map((item, i) => {
           if (item.title === category) {
@@ -251,163 +253,178 @@ const NewElementPage = (props) => {
     onClose();
   };
   return (
-    <Stack bg="#eee"
-    //  h="100vh"
-    pb="100px"
-     >
-      <Stack ml="20%" mt="10%" mx="auto">
-        {showModalCat && (
-          <ModalCategory
-            openModal={onOpen}
-            closeModal={closeModal}
-            isOpen={isOpen}
-            getNewCategory={getNewCategory}
-          />
-        )}
-        {showModalSub && (
-          <ModalSubCategory
-            category={category}
-            openModal={onOpen}
-            closeModal={closeModal}
-            isOpen={isOpen}
-            getNewSubCategory={getNewSubCategory}
-          />
-        )}
-
-        <Heading mb={3}>Create New Element</Heading>
-        {elementRender && <Heading>render</Heading>}
-        <Box bg="#fff" rounded="10px" shadow="lg">
-          <Box p={5} width="850px">
-            {showAlert && (
-              <Alert mb={5} status="error">
-                <AlertIcon />
-                {errors.msg}
-              </Alert>
+    <>
+      {!localStorage.userToken ? (
+        <Redirect to="/login" />
+      ) : (
+        <Stack
+          bg="#eee"
+          h="100vh"
+          //  h="100vh"
+          pb="100px"
+        >
+          <Flex ml="15%" mt="7%" justifyContent="center" p={5}>
+            {showModalCat && (
+              <ModalCategory
+                openModal={onOpen}
+                closeModal={closeModal}
+                isOpen={isOpen}
+                getNewCategory={getNewCategory}
+              />
             )}
-            <form onSubmit={handleSubmit}>
-              <Flex>
-                {/* **********************************************************select with category */}
+            {showModalSub && (
+              <ModalSubCategory
+                category={category}
+                openModal={onOpen}
+                closeModal={closeModal}
+                isOpen={isOpen}
+                getNewSubCategory={getNewSubCategory}
+              />
+            )}
+            <Box width="60%">
+              <Heading mb={3}>Create New Element</Heading>
+              {elementRender && <Heading>render</Heading>}
+              <Box bg="#fff" rounded="10px" shadow="lg">
+                <Box p={5}>
+                  {showAlert && (
+                    <Alert mb={5} status="error">
+                      <AlertIcon />
+                      {errors.msg}
+                    </Alert>
+                  )}
+                  <form onSubmit={handleSubmit}>
+                    <Flex>
+                      {/* **********************************************************select with category */}
 
-                <Flex w="50%">
-                  <FormControl mb={5} mr={5} w="50%">
-                    <FormLabel mb={3} htmlFor="categories">
-                      <Heading fontSize="15px">Categories</Heading>
-                    </FormLabel>
+                      <Flex w="50%">
+                        <FormControl mb={5} mr={5} w="50%">
+                          <FormLabel mb={3} htmlFor="categories">
+                            <Heading fontSize="15px">Categories</Heading>
+                          </FormLabel>
 
-                    <Select id="category" onChange={(e) => handleChange(e)}>
-                      {categories.map((category, i) => (
-                        <option key={i} value={category.title}>
-                          {category.title}
-                        </option>
-                      ))}
+                          <Select
+                            id="category"
+                            onChange={(e) => handleChange(e)}
+                          >
+                            {categories.map((category, i) => (
+                              <option key={i} value={category.title}>
+                                {category.title}
+                              </option>
+                            ))}
 
-                      {/* <option value="3">react</option> */}
-                    </Select>
-                  </FormControl>
-                  <Button mt="33px" bg="#c5c5c5" onClick={handleCat}>
-                    New category
-                  </Button>
-                </Flex>
+                            {/* <option value="3">react</option> */}
+                          </Select>
+                        </FormControl>
+                        <Button mt="33px" bg="#c5c5c5" onClick={handleCat}>
+                          New category
+                        </Button>
+                      </Flex>
 
-                {/* ** **********************************************************input sub categorie */}
+                      {/* ** **********************************************************input sub categorie */}
 
-                <Flex w="50%">
-                  <FormControl mb={5} w="50%" mr={5}>
-                    <FormLabel mb={3} htmlFor="subCategory">
-                      <Heading fontSize="15px">Sub Category</Heading>
-                    </FormLabel>
+                      <Flex w="50%">
+                        <FormControl mb={5} w="50%" mr={5}>
+                          <FormLabel mb={3} htmlFor="subCategory">
+                            <Heading fontSize="15px">Sub Category</Heading>
+                          </FormLabel>
 
-                    <Select id="subCategory" onChange={(e) => handleChange(e)}>
-                      {subCategories.map((subCategory, i) => (
-                        <option key={i} value={subCategory.title}>
-                          {subCategory.title}
-                        </option>
-                      ))}
+                          <Select
+                            id="subCategory"
+                            onChange={(e) => handleChange(e)}
+                          >
+                            {subCategories.map((subCategory, i) => (
+                              <option key={i} value={subCategory.title}>
+                                {subCategory.title}
+                              </option>
+                            ))}
 
-                      {/* <option value="3">react</option> */}
-                    </Select>
-                  </FormControl>
-                  <Button mt="33px" bg="#c5c5c5" onClick={handleSub}>
-                    New Sub
-                  </Button>
+                            {/* <option value="3">react</option> */}
+                          </Select>
+                        </FormControl>
+                        <Button mt="33px" bg="#c5c5c5" onClick={handleSub}>
+                          New Sub
+                        </Button>
 
-                  {/* <Select id="react" placeholder="Autre" value="react" /> */}
-                </Flex>
-              </Flex>
+                        {/* <Select id="react" placeholder="Autre" value="react" /> */}
+                      </Flex>
+                    </Flex>
 
-              <FormControl mb={5}>
-                <FormLabel mb={3} htmlFor="title">
-                  <Heading fontSize="15px">Title</Heading>
-                </FormLabel>
-                <Input
-                  // isDisabled={true}
-                  isInvalid={errors.title ? true : false}
-                  errorBorderColor="crimson"
-                  focusBorderColor="lime"
-                  onChange={(e) => handleChange(e)}
-                  id="title"
-                  placeholder="eg. Install laravel"
-                />
-                <FormHelperText color="crimson" id="email-helper-text">
-                  {errors.title ? errors.title : ""}
-                </FormHelperText>
-              </FormControl>
+                    <FormControl mb={5}>
+                      <FormLabel mb={3} htmlFor="title">
+                        <Heading fontSize="15px">Title</Heading>
+                      </FormLabel>
+                      <Input
+                        // isDisabled={true}
+                        isInvalid={errors.title ? true : false}
+                        errorBorderColor="crimson"
+                        focusBorderColor="lime"
+                        onChange={(e) => handleChange(e)}
+                        id="title"
+                        placeholder="eg. Install laravel"
+                      />
+                      <FormHelperText color="crimson" id="email-helper-text">
+                        {errors.title ? errors.title : ""}
+                      </FormHelperText>
+                    </FormControl>
 
-              <FormControl mb={5}>
-                <FormLabel mb={3} htmlFor="code">
-                  <Heading fontSize="15px">Code</Heading>
-                </FormLabel>
-                <Textarea
-                  onChange={(e) => handleChange(e)}
-                  mb={1}
-                  isInvalid={errors.code ? true : false}
-                  errorBorderColor="crimson"
-                  focusBorderColor="lime"
-                  id="code"
-                  placeholder="eg. php artisan serv"
-                ></Textarea>
-                <FormHelperText color="crimson" id="email-helper-text">
-                  {errors.code ? errors.code : ""}
-                </FormHelperText>
-              </FormControl>
+                    <FormControl mb={5}>
+                      <FormLabel mb={3} htmlFor="code">
+                        <Heading fontSize="15px">Code</Heading>
+                      </FormLabel>
+                      <Textarea
+                        onChange={(e) => handleChange(e)}
+                        mb={1}
+                        isInvalid={errors.code ? true : false}
+                        errorBorderColor="crimson"
+                        focusBorderColor="lime"
+                        id="code"
+                        placeholder="eg. php artisan serv"
+                      ></Textarea>
+                      <FormHelperText color="crimson" id="email-helper-text">
+                        {errors.code ? errors.code : ""}
+                      </FormHelperText>
+                    </FormControl>
 
-              <FormControl mb={5}>
-                <FormLabel mb={3} htmlFor="description">
-                  {" "}
-                  <Heading fontSize="15px">Description</Heading>
-                </FormLabel>
-                <Textarea
-                  onChange={(e) => handleChange(e)}
-                  mb={1}
-                  isInvalid={errors.description ? true : false}
-                  errorBorderColor="crimson"
-                  focusBorderColor="lime"
-                  id="description"
-                  placeholder="eg. About your element"
-                ></Textarea>
-                <FormHelperText color="crimson" id="email-helper-text">
-                  {errors.description ? errors.description : ""}
-                </FormHelperText>
-              </FormControl>
-              <Flex>
-                <Button
-                  mx="auto"
-                  isDisabled={disable}
-                  mt={4}
-                  w="20%"
-                  variantColor="teal"
-                  isLoading={loadCreateElm}
-                  loadingText="Creating..."
-                  type="submit"
-                >
-                  Create
-                </Button>
-              </Flex>
-            </form>
-          </Box>
-        </Box>
-      </Stack>
-    </Stack>
+                    <FormControl mb={5}>
+                      <FormLabel mb={3} htmlFor="description">
+                        {" "}
+                        <Heading fontSize="15px">Description</Heading>
+                      </FormLabel>
+                      <Textarea
+                        onChange={(e) => handleChange(e)}
+                        mb={1}
+                        isInvalid={errors.description ? true : false}
+                        errorBorderColor="crimson"
+                        focusBorderColor="lime"
+                        id="description"
+                        placeholder="eg. About your element"
+                      ></Textarea>
+                      <FormHelperText color="crimson" id="email-helper-text">
+                        {errors.description ? errors.description : ""}
+                      </FormHelperText>
+                    </FormControl>
+                    <Flex>
+                      <Button
+                        mx="auto"
+                        isDisabled={disable}
+                        mt={4}
+                        w="20%"
+                        variantColor="teal"
+                        isLoading={loadCreateElm}
+                        loadingText="Creating..."
+                        type="submit"
+                      >
+                        Create
+                      </Button>
+                    </Flex>
+                  </form>
+                </Box>
+              </Box>
+            </Box>
+          </Flex>
+        </Stack>
+      )}
+    </>
   );
 };
 export default NewElementPage;

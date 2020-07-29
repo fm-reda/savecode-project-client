@@ -1,96 +1,405 @@
 import React from "react";
-import { Box, Divider, Flex, Heading, Stack } from "@chakra-ui/core";
-import { NavLink } from "react-router-dom";
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+  Button,
+  PseudoBox,
+  Avatar,
+  Icon,
+  Spinner,
+} from "@chakra-ui/core";
+import { NavLink, Link, Redirect } from "react-router-dom";
 import Logo from "./../../images/Logo/logo5white.png";
 import { useEffect } from "react";
 import { getCategories } from "../Category/CategoryFunctions";
 import { useState } from "react";
 import Navbar2 from "../Navbar2";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import user from "./../../images/Logo/newuser.png";
+import element from "./../../images/Logo/code.jpg";
+import library from "./../../images/Logo/library.png";
+import categoryLogo from "./../../images/Logo/categoryLogo.png";
+
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import NewElementPage from "./NewElementPage";
 import { LoginPage } from "./LoginPage";
-import Profile from "../Profile";
+import Profile from "../Not-use/Profile1";
+import GetStarted from "../GetStarted";
+import { getStat } from "./../ElementFunctions";
 
 export const Home = () => {
   const [categories, setCategories] = useState([]);
-  // useEffect(() => {
-  //   getCategories().then((res) => {
-  //     setCategories(res.data.success);
-  //     console.log(res);
-  //   });
-  // }, []);
-  return (
-    <Stack ml="20%" mt="10%" >
-      <Box mx="auto">
-        <Heading>Hello from Home</Heading>
-      </Box>
-    </Stack>
-    // <Flex h="100vh" bg="firebase" w="15%">
-    //   <NavLink to="/home">
-    //     {" "}
-    //     <Box
-    //       // border="1px"
-    //       pt="85px"
-    //       mx="auto"
-    //       bgImage={`url('${Logo}')`}
-    //       bgPos="center"
-    //       bgSize="90%"
-    //       bgRepeat="no-repeat"
-    //       w="200px"
-    //       h="10px"
-    //       // h="40px"
-    //       color="#FFF"
-    //     ></Box>
-    //   </NavLink>
-    //   <Box w="20%">sidebar</Box>
-    //   <Box>
-    //     {/* <Navbar2 /> */}
-    //     {/* Main */}
-    //   </Box>
-    //   <Flex>
-    //     <Divider color="#fff"></Divider>
-    //     <Box p={5} color="#FFF" textAlign="left" w="20%">
-    //       <ul>
-    //         {categories.map((category) => (
-    //           <li>z</li>
-    //           // <li>{category.slug}</li>
-    //         ))}
-    //       </ul>
-    //     </Box>
-    //     <Box ml="60%" mt="120px">
-    //       <Router>
-    //         <Route exact path="/home/new-element" component={LoginPage}></Route>
+  const [elements, setElements] = useState([]);
+  const [customs, setCustoms] = useState([]);
+  const [countUser, setCountUser] = useState("");
+  const [countElement, setCountElement] = useState("");
+  const [elementsUser, setElementsUser] = useState([]);
+  const [countCustom, setCountCustom] = useState("");
+  const [countCategory, setCountCategory] = useState("");
+  const [requestStatus, setRequestStatus] = useState(true);
+  useEffect(() => {
+    setRequestStatus(true);
 
-    //         <Route
-    //           exact
-    //           path="/home/new-element"
-    //           render={(props) => (
-    //             <NewElementPage
-    //               {...props}
-    //               // loggedInStatus={loggedInStatus}
-    //               // handleLogout={handleLogout}
-    //             />
-    //           )}
-    //         />
-    //         <Router
-    //           exact
-    //           path="/home/profile"
-    //           render={(props) => (
-    //             <Profile
-    //               {...props}
-    //               // loggedInStatus={loggedInStatus}
-    //               // handleLogout={handleLogout}
-    //             />
-    //           )}
-    //         />
-    //       </Router>
-    //     </Box>
-    //   </Flex>
-    // </Flex>
+    getStat().then((res) => {
+      if (res && res.status == 200) {
+        setElements(res.data.elements);
+        setElementsUser(res.data.elementsUser);
+        setCustoms(res.data.customs);
+        setCountUser(res.data.countUser);
+        setCountElement(res.data.countElement);
+        setCountCustom(res.data.countCustom);
+        setCountCategory(res.data.countCategory);
+        setRequestStatus(false);
+        // const date1 = new Date(res.data.elements[0].created_at);
+        // const date2 = new Date(res.data.elements[1].created_at);
+        // const date3 = new Date(res.data.elements[2].created_at);
+        // const dates = res.data.elements.map((item) => {
+        //   // console.log(item.created_at);
+        //   item.created_at;
+        // });
+        // console.log()
+        //   if (date1 > date2) {
+        //     console.log("date1");
+        //     console.log(date1)
+        //     console.log(date2)
+        //     console.log(date3)
+        //   } else console.log("date2");
+      }
+    });
+  }, []);
+  const handleElement = () => {};
+
+  return (
+    <>
+      {!localStorage.userToken ? (
+        <Redirect to="/" />
+      ) : (
+        <Stack ml="15%" mt="4.1%" bg="bgGray" minH="100vh" pb="400px">
+          {requestStatus ? (
+            <Flex justifyContent="center" align="center" mt="250px">
+              <Box>
+                <Heading color="myYellow" mb={3}>
+                Welcome, please wait...
+                </Heading>
+                <Flex justifyContent="center">
+                  <Spinner
+                    textAlign="center"
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="100px"
+                  />
+                </Flex>
+              </Box>
+            </Flex>
+          ) : (
+            // <Skeleton colorStart="#fff" colorEnd="#CCC" height="50px" mb={5} />
+            <Flex
+              justifyContent="space-between"
+              p="25px"
+              mt="50px"
+              // mx="auto"
+            >
+              {/* ************************************************************ welcome */}
+              <Box mr="40px" flex="3">
+                <Box rounded="md" shadow="lg" bg="#fff" p={5} mb={5}>
+                  <Heading color="myBlue">Welcome {localStorage.name}</Heading>
+                  <Box fontSize="25px" lineHeight="60px" p={2}>
+                    <Text>
+                      <Icon
+                        name="check-circle"
+                        size="24px"
+                        color="myYellow"
+                        mr={3}
+                      />
+                      U can create elements
+                    </Text>
+                    <Text>
+                      <Icon
+                        name="check-circle"
+                        size="24px"
+                        color="myYellow"
+                        mr={3}
+                      />
+                      Search elements from other member's
+                    </Text>
+                    <Text>
+                      <Icon
+                        name="check-circle"
+                        size="24px"
+                        color="myYellow"
+                        mr={3}
+                      />
+                      Add element to your library
+                    </Text>
+                  </Box>
+                </Box>
+                {/* ************************************************************ Recent activities */}
+
+                <Box bg="#FFF" shadow="lg" rounded="md" p={5}>
+                  <Heading color="myBlue" mb={3}>
+                    Recent activities
+                  </Heading>
+                  <Box fontSize="20px" p={3}>
+                    {elementsUser.map((item, i) => {
+                      return (
+                        <>
+                          <Text>
+                            <Icon
+                              name="info"
+                              size="24px"
+                              mr={3}
+                              color="myYellow"
+                            />
+                            {item.created_at}
+                            <Icon
+                              name="minus"
+                              size="10px"
+                              color="myYellow"
+                              mx={4}
+                            />{" "}
+                            Element
+                            <Link to={`/custom/single/${item.id}`}>
+                              <Box
+                                mx={2}
+                                as="span"
+                                color="myYellow"
+                                textTransform="uppercase"
+                                fontSize="25px"
+                              >
+                                {item.title}
+                              </Box>
+                            </Link>
+                            has been created.
+                          </Text>
+                        </>
+                      );
+                    })}
+                  </Box>
+                </Box>
+              </Box>
+              {/* ************************************************************ Latest element */}
+              <Box mx="auto" flex="2">
+                <Box rounded="md" shadow="lg" bg="#FFF" p={5} mb={5}>
+                  {/* ************************************************************Section stats ligne1 */}
+
+                  <Flex mb={5}>
+                    <Flex
+                      flex="1"
+                      justifyContent="center"
+                      alignItems="center"
+                      mx="auto"
+                    >
+                      <Avatar
+                        size="xl"
+                        mr={4}
+                        name="Dan Abrahmov"
+                        src={`${user}`}
+                      />
+                      <Box>
+                        <Heading fontSize="50px">{countUser}</Heading>
+                        <Text textAlign="center" color="gray.400">
+                          Users
+                        </Text>
+                      </Box>
+                    </Flex>
+
+                    <Flex
+                      flex="1"
+                      justifyContent="center"
+                      alignItems="center"
+                      mx="auto"
+                    >
+                      <Avatar
+                        size="xl"
+                        mr={4}
+                        name="Dan Abrahmov"
+                        src={`${element}`}
+                      />
+                      <Box>
+                        <Heading fontSize="50px">{countElement}</Heading>
+                        <Text textAlign="center" color="gray.400">
+                          Elements
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Flex>
+                  {/* ************************************************************Section stats ligne 2 */}
+                  <Flex>
+                    <Flex
+                      flex="1"
+                      justifyContent="center"
+                      alignItems="center"
+                      mx="auto"
+                    >
+                      <Avatar
+                        size="xl"
+                        mr={4}
+                        name="Dan Abrahmov"
+                        src={`${library}`}
+                      />
+                      <Box>
+                        <Heading fontSize="50px">{countCustom}</Heading>
+                        <Text textAlign="center" color="gray.400">
+                          Library
+                        </Text>
+                      </Box>
+                    </Flex>
+
+                    <Flex
+                      flex="1"
+                      justifyContent="center"
+                      alignItems="center"
+                      mx="auto"
+                    >
+                      <Avatar
+                        size="xl"
+                        mr={4}
+                        name="Dan Abrahmov"
+                        src={`${categoryLogo}`}
+                      />
+                      <Box>
+                        <Heading fontSize="50px">{countCategory}</Heading>
+                        <Text textAlign="center" color="gray.400">
+                          Categories
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Flex>
+
+                  {/* ************************************************************ end stats */}
+                </Box>
+
+                <Box rounded="md" shadow="lg" bg="#fff" p={5} mb={5}>
+                  <Heading mb={5} color="myBlue">
+                    Latest Elements
+                  </Heading>
+                  {elements.map((item, i) => {
+                    return (
+                      <>
+                        <Link to={`/custom/single/${item.id}`}>
+                          <PseudoBox
+                            pos="relative"
+                            key={i}
+                            rounded="md"
+                            // height="250px"
+                            shadow="lg"
+                            p={3}
+                            bg="#fff"
+                            // width="430px"
+                            // width="30%"
+                            mb="20px"
+                            mx={3}
+                            onClick={handleElement}
+                            _hover={{
+                              borderColor: "myYellow",
+                              bg: "#ff9e0069",
+                              // bg: "#fff6e7",
+                              color: "#000",
+                              shadow: "lg",
+                              cursor: "pointer",
+                              // marginBottom: "10px",
+                            }}
+                            // width="100%"
+                          >
+                            {/* {item.customs.length && <Owned />} */}
+
+                            <Flex
+                              direction="column"
+                              justifyContent="space-between"
+                              h="100%"
+                            >
+                              <Box>
+                                <Flex
+                                  align="center"
+                                  mb={3}
+                                  justifyContent="space-between"
+                                >
+                                  <Flex>
+                                    <Avatar
+                                      fontSize="50px"
+                                      mr={2}
+                                      name="Dan Abrahmov"
+                                      src={`http://localhost:8000/storage/users/${item.user.avatar}`}
+                                    />
+                                    <Text fontSize="20px" color="#007bff" m={3}>
+                                      {/* {localStorage.name === creator ? "You" : creator} */}
+                                      {item.user.id == localStorage.user_id
+                                        ? "You"
+                                        : item.user.name}
+                                    </Text>
+                                  </Flex>
+                                  <Box>
+                                    <Text color="gray.400">
+                                      {item.created_at.substring(0, 10)}
+                                    </Text>
+                                  </Box>
+                                </Flex>
+                                <Divider />
+                                <Flex justifyContent="space-between">
+                                  <Heading fontSize="20px" mb={2}>
+                                    {item.title.substring(0, 30) +
+                                      (item.title.length > 29 ? "..." : "")}
+                                    {/* Title */}
+                                  </Heading>
+                                  {/* <Text size="md">
+                              {item.default_category.title}
+                              </Text> */}
+                                  <Box
+                                    p={1}
+                                    rounded="md"
+                                    // color="#FFF"
+                                    // color="gray.400"
+                                    // bg={`${item.default_category.slug}`}
+                                  >
+                                    {item.default_category.title}
+                                    {/* category */}
+                                  </Box>
+                                </Flex>
+
+                                {/* <Flex justifyContent="space-between">
+                              <Text color="gray.400">
+                                {item.default_category.title}
+                              </Text>
+                              <Text color="gray.400">
+                                {item.created_at.substring(0, 10)}
+                              </Text>
+                            </Flex> */}
+                              </Box>
+                              {/* 
+                          <Flex justifyContent="center">
+                            <Link to={`/custom/single/${item.id}`}>
+                              <Button
+                                color="#FFF"
+                                mx="auto"
+                                //   onClick={handleClick}
+                                bg="myYellow"
+                                _hover={{
+                                  bg: "#fff",
+                                  color: "myYellow",
+                                }}
+                              >
+                                View
+                              </Button>
+                            </Link>
+                          </Flex> */}
+                            </Flex>
+                          </PseudoBox>
+                        </Link>
+                      </>
+                    );
+                  })}
+                </Box>
+                {/* ************************************************************Section Stats */}
+              </Box>
+            </Flex>
+          )}
+        </Stack>
+      )}
+    </>
   );
 };
