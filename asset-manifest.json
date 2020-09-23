@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/savecode/static/css/main.b0a7c892.chunk.css",
+    "main.js": "/savecode/static/js/main.1d63c54c.chunk.js",
+    "main.js.map": "/savecode/static/js/main.1d63c54c.chunk.js.map",
+    "runtime-main.js": "/savecode/static/js/runtime-main.632049d0.js",
+    "runtime-main.js.map": "/savecode/static/js/runtime-main.632049d0.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/savecode/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.ff699c79.chunk.js": "/savecode/static/js/2.ff699c79.chunk.js",
+    "static/js/2.ff699c79.chunk.js.map": "/savecode/static/js/2.ff699c79.chunk.js.map",
+    "index.html": "/savecode/index.html",
+    "precache-manifest.e4cf459413463b3abe409843f53ce1a1.js": "/savecode/precache-manifest.e4cf459413463b3abe409843f53ce1a1.js",
+    "service-worker.js": "/savecode/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/savecode/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.b0a7c892.chunk.css.map": "/savecode/static/css/main.b0a7c892.chunk.css.map",
+    "static/js/2.ff699c79.chunk.js.LICENSE.txt": "/savecode/static/js/2.ff699c79.chunk.js.LICENSE.txt",
+    "static/media/15.png": "/savecode/static/media/15.44f00b35.png",
+    "static/media/code.jpg": "/savecode/static/media/code.323e60d3.jpg",
+    "static/media/github.png": "/savecode/static/media/github.7ac6948d.png",
+    "static/media/journey-laravel.svg": "/savecode/static/media/journey-laravel.4b0b7936.svg",
+    "static/media/laptop.jpg": "/savecode/static/media/laptop.67a37bcc.jpg",
+    "static/media/laravel.png": "/savecode/static/media/laravel.8fbea12a.png",
+    "static/media/library.png": "/savecode/static/media/library.bb7ef56e.png",
+    "static/media/login2.jpg": "/savecode/static/media/login2.eeea3d18.jpg",
+    "static/media/logo.svg": "/savecode/static/media/logo.ee7cd8ed.svg",
+    "static/media/logo5.png": "/savecode/static/media/logo5.1b98f0d7.png",
+    "static/media/logo5white.png": "/savecode/static/media/logo5white.2d8aebc9.png",
+    "static/media/newuser.png": "/savecode/static/media/newuser.0b2c33c3.png",
+    "static/media/react.png": "/savecode/static/media/react.580ffd26.png",
+    "static/media/register1.svg": "/savecode/static/media/register1.f7379fbe.svg",
+    "static/media/robot-illustration.svg": "/savecode/static/media/robot-illustration.78800098.svg",
+    "static/media/web.jpg": "/savecode/static/media/web.2a254c26.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.632049d0.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.ff699c79.chunk.js",
+    "static/css/main.b0a7c892.chunk.css",
+    "static/js/main.1d63c54c.chunk.js"
+  ]
+}
