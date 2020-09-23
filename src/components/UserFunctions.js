@@ -1,40 +1,41 @@
 import axios from "axios";
 import { resolve } from "path";
 
-const url = "http://localhost:8000/";
-export const register = (newUser) => {
+const url = process.env.REACT_APP_URL;
+export const register = newUser => {
   return axios
     .post(url + "api/v1/register", newUser, {
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json" }
     })
-    .then((res) => {
-      console.log(res);
+    .then(res => {
+      // console.log(res);
       return res;
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(err => {
+      // console.log(err.response);
+      return err.response;
     });
 };
 
-export const login = (user) => {
+export const login = user => {
   // console.log("login function");
   return axios
     .post(
       ` ${url}api/v1/login`,
       {
         email: user.email,
-        password: user.password,
+        password: user.password
       },
       {
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json" }
       }
     )
-    .then((res) => {
+    .then(res => {
       localStorage.setItem("userToken", res.data.access_token);
       localStorage.setItem("user_id", res.data.user.id);
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("avatar", res.data.user.avatar);
-      console.log(res);
+      // console.log(res);
 
       return res;
       // console.log(res);
@@ -42,7 +43,8 @@ export const login = (user) => {
       //   console.log("not found");
       // }
     })
-    .catch((err) => {
+    .catch(err => {
+      // console.log(err.response);
       return err.response;
       // console.log(err.response);
     });
@@ -56,42 +58,42 @@ export const profile = async () => {
   return await axios
     .get(`${url}api/v1/details`, {
       headers: {
-        Authorization: token,
-      },
+        Authorization: token
+      }
     })
-    .then((res) => {
-      console.log(res);
+    .then(res => {
+      // console.log(res);
       return res;
     })
-    .catch((err) => {
+    .catch(err => {
       return err.response;
       console.log(err.response);
     });
 };
 
-export const uploadAvatar = (formData) => {
+export const uploadAvatar = formData => {
   // console.log(newElement);
 
-  console.log(localStorage.getItem("userToken"));
+  // console.log(localStorage.getItem("userToken"));
 
   return axios
     .post(url + "api/v1/userAvatar", formData, {
       headers: {
         "content-type": "application/json",
 
-        Authorization: `Bearer ${localStorage.userToken}`,
-      },
+        Authorization: `Bearer ${localStorage.userToken}`
+      }
     })
-    .then((res) => {
-      console.log(res);
+    .then(res => {
+      // console.log(res);
       return res;
     })
-    .catch((err) => {
+    .catch(err => {
       return err.response;
       console.log(err);
     });
 };
-export const updateUser = (userInfo) => {
+export const updateUser = userInfo => {
   // console.log(newElement);
 
   return axios
@@ -99,14 +101,14 @@ export const updateUser = (userInfo) => {
       headers: {
         "content-type": "application/json",
 
-        Authorization: `Bearer ${localStorage.userToken}`,
-      },
+        Authorization: `Bearer ${localStorage.userToken}`
+      }
     })
-    .then((res) => {
-      console.log(res);
+    .then(res => {
+      // console.log(res);
       return res;
     })
-    .catch((err) => {
+    .catch(err => {
       return err.response;
       console.log(err);
     });

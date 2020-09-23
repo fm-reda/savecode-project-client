@@ -5,7 +5,6 @@ import {
   Flex,
   Text,
   Button,
-  Link,
   Avatar,
   Divider,
   Accordion,
@@ -21,12 +20,19 @@ import {
   MenuDivider,
   InputGroup,
   InputLeftElement,
-  Input,
+  Input
 } from "@chakra-ui/core";
 // import { Button1 } from "react-bootstrap";
 
 // import { triangle-down } from "react-icons/md"
-import { NavLink, Redirect, Router, Route } from "react-router-dom";
+import {
+  NavLink,
+  Redirect,
+  Router,
+  Route,
+  useRouteMatch,
+  Link
+} from "react-router-dom";
 import Logo from "./../images/Logo/logo5white.png";
 import "../App.css";
 import { categoriesContext } from "../App";
@@ -35,6 +41,7 @@ import { LoginPage } from "./pages/LoginPage";
 import NewElementPage from "./pages/NewElementPage";
 import Profile from "./Not-use/Profile1";
 import { getCategories } from "./Category/CategoryFunctions";
+import SingleCustom from "./Custom-element/SingleCustom";
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
     {children}
@@ -70,7 +77,7 @@ const LinkLogin = ({ children }) => (
   </>
 );
 
-const Navbar2 = (props) => {
+const Navbar2 = props => {
   // const categoriesProps = useContext(categoriesContext);
   const { categoriesProps } = props;
 
@@ -94,7 +101,7 @@ const Navbar2 = (props) => {
   const { loggedInStatus, handleLogout } = props;
   // console.log(loggedInStatus);
   const [show, setShow] = React.useState(false);
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState("");
   const [categories, setCategories] = useState([]);
 
   const handleToggle = () => setShow(!show);
@@ -151,15 +158,15 @@ const Navbar2 = (props) => {
           // _hover={{ bg: "#14a3e8" }}
           _expanded={{ bg: "#14a3e8" }}
           _focus={{
-            outline: 0,
+            outline: 0
             //  boxShadow: "outline"
           }}
         >
           <Avatar
             fontSize="50px"
             mr={2}
-            name="Dan Abrahmov"
-            src={`http://localhost:8000/storage/users/${localStorage.getItem(
+            name=""
+            src={`${process.env.REACT_APP_URL}storage/${localStorage.getItem(
               "avatar"
             )}`}
           />
@@ -197,14 +204,14 @@ const Navbar2 = (props) => {
       </Text> */}
     </Flex>
   );
-  const handleKeyPress = (e) => {
+  const handleKeyPress = e => {
     if (e.charCode == 13) {
       // setSearch(e.target.value);
       handleSubmit(e);
     }
     // console.log(e.target.value);
   };
-  const handleChange = (e) => {
+  const handleChange = e => {
     // event.preventDefault();t
     // if (e.keyCode === 13) {
     //   console.log(e.target.value);
@@ -212,11 +219,12 @@ const Navbar2 = (props) => {
     // console.log(e.target.value);
     setSearch(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     // e.preventDefault();
     // console.log(search);
     props.history.push("/search/element/" + search);
   };
+  // let { path, url } = useRouteMatch();
 
   return (
     // ******************************************************sidebar
@@ -228,7 +236,7 @@ const Navbar2 = (props) => {
         bg="myBlue"
         w="15%"
         pos="fixed"
-        shadow="xl"
+        shadow="lg"
         borderColor="myYellow"
         border="1px"
       >
@@ -272,10 +280,8 @@ const Navbar2 = (props) => {
                       {category.sub_categories.map((item, j) => {
                         return (
                           <>
-                            <NavLink
-                              key={j}
-                              to={`/${category.slug}/${item.slug}`}
-                            >
+                            {/* <Link to={`${url}/${category.slug}/${item.slug}`}> */}
+                            {/* <Link to={`/test}`}>
                               <AccordionPanel bg="#fff" p={0}>
                                 <Button
                                   color="#333"
@@ -296,11 +302,51 @@ const Navbar2 = (props) => {
                                   {item.title} ({item.customs.length})
                                 </Button>
                               </AccordionPanel>
+                            </Link> */}
+
+                            <NavLink
+                              key={j}
+                              to={`/custom/${category.slug}/${item.slug}`}
+                            >
+                              <AccordionPanel bg="#fff" p={0}>
+                                <Button
+                                  color="#333"
+                                  w="100%"
+                                  bg="#fff"
+                                  _active={{
+                                    bg: "#C4C4C4",
+                                    transform: "scale(0.98)",
+                                    borderColor: "#000"
+                                  }}
+                                  _focus={{
+                                    bg: "#F2F2F2",
+                                    transform: "scale(0.98)",
+                                    borderColor: "myYellow"
+                                  }}
+                                  _hover={{ bg: "myYellow", color: "" }}
+                                >
+                                  {item.title} ({item.customs.length})
+                                </Button>
+                              </AccordionPanel>
                             </NavLink>
                           </>
                         );
                       })}
                     </AccordionItem>
+                    {/* <Route path={`/:category`}>
+                      <SingleCustom />
+                    </Route> */}
+                    {/* <Route
+                      exact
+                      path="/:category/:subCategory"
+                      render={(props) => (
+                        <SingleCustom
+                          {...props}
+                          // loggedInStatus={loggedInStatus}
+                          // handleLogout={handleLogout}
+                        />
+                      )}
+                    /> */}
                   </>
                 );
               })}
@@ -434,13 +480,13 @@ const Navbar2 = (props) => {
                 placeholder="Search"
                 rounded="0"
                 roundedLeft="md"
-                onChange={(e) => handleChange(e)}
+                onChange={e => handleChange(e)}
                 onKeyPress={handleKeyPress}
               />
               <Button
                 bg="myYellow"
                 roundedLeft="0"
-                onClick={(e) => handleSubmit(e)}
+                onClick={e => handleSubmit(e)}
               >
                 <Icon name="search" color="#000" />
               </Button>

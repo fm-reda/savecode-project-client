@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Divider,
@@ -11,8 +11,9 @@ import {
   Avatar,
   Icon,
   Spinner,
+  Link,
 } from "@chakra-ui/core";
-import { NavLink, Link, Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import Logo from "./../../images/Logo/logo5white.png";
 import { useEffect } from "react";
 import { getCategories } from "../Category/CategoryFunctions";
@@ -29,8 +30,11 @@ import { LoginPage } from "./LoginPage";
 import Profile from "../Not-use/Profile1";
 import GetStarted from "../GetStarted";
 import { getStat } from "./../ElementFunctions";
+import { LogStatusContext } from "../../App";
 
 export const Home = () => {
+  const rendering = useContext(LogStatusContext);
+
   const [categories, setCategories] = useState([]);
   const [elements, setElements] = useState([]);
   const [customs, setCustoms] = useState([]);
@@ -41,6 +45,7 @@ export const Home = () => {
   const [countCategory, setCountCategory] = useState("");
   const [requestStatus, setRequestStatus] = useState(true);
   useEffect(() => {
+    rendering();
     setRequestStatus(true);
 
     getStat().then((res) => {
@@ -82,7 +87,7 @@ export const Home = () => {
             <Flex justifyContent="center" align="center" mt="250px">
               <Box>
                 <Heading color="myYellow" mb={3}>
-                Welcome, please wait...
+                  Welcome, please wait...
                 </Heading>
                 <Flex justifyContent="center">
                   <Spinner
@@ -116,7 +121,7 @@ export const Home = () => {
                         color="myYellow"
                         mr={3}
                       />
-                      U can create elements
+                      You can create elements
                     </Text>
                     <Text>
                       <Icon
@@ -163,16 +168,18 @@ export const Home = () => {
                               mx={4}
                             />{" "}
                             Element
-                            <Link to={`/custom/single/${item.id}`}>
-                              <Box
-                                mx={2}
-                                as="span"
-                                color="myYellow"
-                                textTransform="uppercase"
-                                fontSize="25px"
-                              >
-                                {item.title}
-                              </Box>
+                            <Link color="teal.500" href="#">
+                              <NavLink to={`/element/single/${item.id}`}>
+                                <Box
+                                  mx={2}
+                                  as="span"
+                                  color="myYellow"
+                                  textTransform="uppercase"
+                                  fontSize="20px"
+                                >
+                                  {item.title}
+                                </Box>
+                              </NavLink>
                             </Link>
                             has been created.
                           </Text>
@@ -195,16 +202,14 @@ export const Home = () => {
                       mx="auto"
                     >
                       <Avatar
-                        size="xl"
+                        size="lg"
                         mr={4}
-                        name="Dan Abrahmov"
+                        name=""
                         src={`${user}`}
                       />
-                      <Box>
-                        <Heading fontSize="50px">{countUser}</Heading>
-                        <Text textAlign="center" color="gray.400">
-                          Users
-                        </Text>
+                      <Box textAlign="center">
+                        <Heading fontSize="30px">{countUser}</Heading>
+                        <Text color="gray.400">Users</Text>
                       </Box>
                     </Flex>
 
@@ -215,16 +220,14 @@ export const Home = () => {
                       mx="auto"
                     >
                       <Avatar
-                        size="xl"
+                        size="lg"
                         mr={4}
-                        name="Dan Abrahmov"
+                        name=""
                         src={`${element}`}
                       />
-                      <Box>
-                        <Heading fontSize="50px">{countElement}</Heading>
-                        <Text textAlign="center" color="gray.400">
-                          Elements
-                        </Text>
+                      <Box textAlign="center">
+                        <Heading fontSize="30px">{countElement}</Heading>
+                        <Text color="gray.400">Elements</Text>
                       </Box>
                     </Flex>
                   </Flex>
@@ -237,16 +240,14 @@ export const Home = () => {
                       mx="auto"
                     >
                       <Avatar
-                        size="xl"
+                        size="lg"
                         mr={4}
-                        name="Dan Abrahmov"
+                        name=""
                         src={`${library}`}
                       />
-                      <Box>
-                        <Heading fontSize="50px">{countCustom}</Heading>
-                        <Text textAlign="center" color="gray.400">
-                          Library
-                        </Text>
+                      <Box textAlign="center">
+                        <Heading fontSize="30px">{countCustom}</Heading>
+                        <Text color="gray.400">Library</Text>
                       </Box>
                     </Flex>
 
@@ -257,16 +258,14 @@ export const Home = () => {
                       mx="auto"
                     >
                       <Avatar
-                        size="xl"
+                        size="lg"
                         mr={4}
-                        name="Dan Abrahmov"
+                        name=""
                         src={`${categoryLogo}`}
                       />
-                      <Box>
-                        <Heading fontSize="50px">{countCategory}</Heading>
-                        <Text textAlign="center" color="gray.400">
-                          Categories
-                        </Text>
+                      <Box textAlign="center">
+                        <Heading fontSize="30px">{countCategory}</Heading>
+                        <Text color="gray.400">Categories</Text>
                       </Box>
                     </Flex>
                   </Flex>
@@ -281,7 +280,7 @@ export const Home = () => {
                   {elements.map((item, i) => {
                     return (
                       <>
-                        <Link to={`/custom/single/${item.id}`}>
+                        <NavLink key={i} to={`/element/single/${item.id}`}>
                           <PseudoBox
                             pos="relative"
                             key={i}
@@ -323,7 +322,7 @@ export const Home = () => {
                                     <Avatar
                                       fontSize="50px"
                                       mr={2}
-                                      name="Dan Abrahmov"
+                                      name=""
                                       src={`http://localhost:8000/storage/users/${item.user.avatar}`}
                                     />
                                     <Text fontSize="20px" color="#007bff" m={3}>
@@ -389,7 +388,7 @@ export const Home = () => {
                           </Flex> */}
                             </Flex>
                           </PseudoBox>
-                        </Link>
+                        </NavLink>
                       </>
                     );
                   })}

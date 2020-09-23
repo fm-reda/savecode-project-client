@@ -13,7 +13,7 @@ const Sidebar = () => {
   useEffect(() => {
     getCategories().then((res) => {
       setCategories(res.data.success);
-      console.log(res);
+      // console.log(res);
     });
   }, []);
   return (

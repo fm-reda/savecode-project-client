@@ -27,7 +27,7 @@ const ModalAddCustom = (props) => {
     subCategory,
     element_id,
   } = props;
-  console.log(category);
+  // console.log(category);
   const [errors, setErrors] = useState({});
   //   const [categories, setCategories] = useState("");
   //   const [subCategory, setSubCategory] = useState("");
@@ -60,7 +60,7 @@ const ModalAddCustom = (props) => {
     }
     setDatas({ ...datas, [e.target.id]: e.target.value });
     //setCategories(e.target.value);
-    console.log(datas);
+    // console.log(datas);
   };
 
   const handleSubmit = (e) => {

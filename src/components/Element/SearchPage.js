@@ -13,6 +13,7 @@ import {
   Tag,
   Skeleton,
   Spinner,
+  SimpleGrid,
 } from "@chakra-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import laravel from "./../../images/Logo/laravel.png";
@@ -41,8 +42,8 @@ const SearchPage = (props) => {
   const [searchAll, setSearchAll] = useState([]);
   const [requestStatus, setRequestStatus] = useState(false);
   const [choice, setChoice] = useState("");
-  console.log("word >>" + word);
-  console.log("params >>" + props.match.params.search);
+  // console.log("word >>" + word);
+  // console.log("params >>" + props.match.params.search);
 
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +59,7 @@ const SearchPage = (props) => {
   // console.log("current :" + currentPage);
 
   useEffect(() => {
-    console.log("useffect");
+
     // setNumberOfPage(1);
     // setRequestStatus(false);
     const newSearch = {
@@ -68,7 +69,7 @@ const SearchPage = (props) => {
       setWord(props.match.params.search);
       setRequestStatus(false);
       searchWord(newSearch).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res && res.status == 200) {
           if (res.data.elements) {
             setSearchLaravel([]);
@@ -78,7 +79,7 @@ const SearchPage = (props) => {
             setSearchGithub([]);
             setSearchOther([]);
             if (Array.isArray(res.data.elements) && !res.data.elements.length) {
-              console.log("element empty");
+              // console.log("element empty");
             }
 
             // setSearchAll(res.data.elements);
@@ -99,14 +100,13 @@ const SearchPage = (props) => {
     if (!choice == "") {
       setCurrentPage(1);
       setsearchResults([]);
-      console.log(choice);
+      // console.log(choice);
       if (choice == "all") {
-        console.log("useefecft> choice>>all");
         setsearchResults(searchAll);
       }
 
       searchAll.map((element) => {
-        console.log("effect>choice>map");
+        // console.log("effect>choice>map");
         // setSearchAll((searchAll) => [...searchAll, element]);
         switch (element.default_category.slug) {
           case choice:
@@ -179,7 +179,7 @@ const SearchPage = (props) => {
 
         break;
       case 1:
-        console.log("switch laravel");
+        // console.log("switch laravel");
         // console.log(s);
         // setsearchResults(searchLaravel);
         setChoice("laravel");
@@ -309,7 +309,13 @@ const SearchPage = (props) => {
               </Pagination>
             </Flex>
             {requestStatus ? (
-              <Stack
+              <SimpleGrid
+                mt="3%"
+                // minChildWidth="30%"
+                columns={3}
+                spacing="10px"
+              >
+                {/* <Stack
                 // justifyContent="center"
                 // align="center"
                 //   mt="3%"
@@ -322,7 +328,7 @@ const SearchPage = (props) => {
                 p={5}
                 shouldWrapChildren={true}
                 flexWrap="wrap"
-              >
+              > */}
                 {currentPosts.map((item, i) => {
                   return (
                     <>
@@ -334,7 +340,7 @@ const SearchPage = (props) => {
                         shadow="lg"
                         p={3}
                         bg="#fff"
-                        width="430px"
+                        // width="430px"
                         // width="30%"
                         mb="40px"
                         mx={3}
@@ -401,8 +407,8 @@ const SearchPage = (props) => {
                                 <Avatar
                                   fontSize="50px"
                                   mr={2}
-                                  name="Dan Abrahmov"
-                                  src={`http://localhost:8000/storage/users/${item.user.avatar}`}
+                                  name=""
+                                  src={`${process.env.REACT_APP_URL}storage/users/${item.user.avatar}`}
                                 />
                                 <Text fontSize="20px" color="#007bff" mb={3}>
                                   {/* {localStorage.name === creator ? "You" : creator} */}
@@ -438,8 +444,13 @@ const SearchPage = (props) => {
                             </Flex>
 
                             <Box bg="#EF5F5F5" rounded="10px" p={2}>
-                              {item.description.substring(0, 60) +
+                              {item.description
+                                .replace(/(<([^>]+)>)/gi, "")
+                                .substring(0, 80) +
                                 (item.description.length > 80 ? "..." : "")}
+
+                              {/* {item.description.substring(0, 60) +
+                                (item.description.length > 80 ? "..." : "")} */}
                             </Box>
                             <Divider></Divider>
                             {/* <Flex justifyContent="space-between">
@@ -453,7 +464,7 @@ const SearchPage = (props) => {
                           </Box>
 
                           <Flex justifyContent="center">
-                            <Link to={`/custom/single/${item.id}`}>
+                            <Link to={`/element/single/${item.id}`}>
                               <Button
                                 color="#FFF"
                                 mx="auto"
@@ -473,8 +484,9 @@ const SearchPage = (props) => {
                     </>
                   );
                 })}
-              </Stack>
+              </SimpleGrid>
             ) : (
+              // </Stack>
               <Flex justifyContent="center" align="center" my="50px">
                 <Box>
                   <Heading color="myYellow" mb={3}>

@@ -117,7 +117,7 @@ export const LibraryStarted = (props) => {
               </Text>
             </Box>
             <Heading mb={2} fontSize="20px" color="#0297e0">
-              Categories
+             Sub-Category
             </Heading>
             <Box
               p={3}
@@ -175,13 +175,12 @@ export const LibraryStarted = (props) => {
                     <Box
                       pos="relative"
                       p={5}
-                      w="80%"
+                      w="100%"
                       bg="#011627"
                       rounded="md"
                       shadow="xl"
                       color="#FFF"
                       mb={2}
-                      w="100%"
                       minH="100px"
                     >
                       <Button
@@ -235,7 +234,7 @@ export const LibraryStarted = (props) => {
         mx="auto"
         mt="55px"
       >
-        <Box w="80%" bg="#fff" p={5} rounded="lg" mt="12px">
+        <Box w="90%" bg="#fff" p={5} rounded="lg" mt="12px">
           <Text fontSize="20px" mb={2}>
             Title : {newElement.title}
           </Text>
@@ -245,7 +244,7 @@ export const LibraryStarted = (props) => {
           <Box
             pos="relative"
             p={5}
-            w="80%"
+         
             bg="#011627"
             rounded="md"
             shadow="xl"

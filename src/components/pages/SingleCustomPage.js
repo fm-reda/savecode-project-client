@@ -19,6 +19,7 @@ import {
   useDisclosure,
   useClipboard,
 } from "@chakra-ui/core";
+import Parser from "html-react-parser";
 // import { singleCustom } from "../Custom-element/CustomFunctions";
 import { singleElement } from "../ElementFunctions";
 import { CategorySub } from "../Category/CategorySub";
@@ -63,7 +64,7 @@ export const SingleCustomPage = (props) => {
   useEffect(() => {
     singleElement(id).then((res) => {
       if (res && res.status == 200) {
-        console.log(res.data.element.user);
+        // console.log(res.data.element.user);
         setTitle(res.data.element.title);
         setDescription(res.data.element.description);
         setCode(res.data.element.code);
@@ -75,7 +76,7 @@ export const SingleCustomPage = (props) => {
         }
         // console.log(res.data.element.user.avatar);
         // console.log(res.data.element.user.name);
-        setSingle(res.data);
+        // setSingle(res.data);
 
         // console.log(res.data.element.default_category.title);
         setDefaultCategory(res.data.element.default_category.title);
@@ -109,7 +110,7 @@ export const SingleCustomPage = (props) => {
     });
   };
   const renderFunc = () => {
-    console.log("render");
+    // console.log("render");
     setRender(!render);
   };
   // console.log(id);
@@ -123,7 +124,7 @@ export const SingleCustomPage = (props) => {
   const addCustom = (e) => {
     createCustomStarted(e).then((res) => {
       if (res && res.status == 201) {
-        console.log(res);
+        // console.log(res);
         setCategory(res.data.category.title);
         setSubCategory(res.data.subCategory.title);
         setCustomId(res.data.custom.id);
@@ -238,7 +239,8 @@ export const SingleCustomPage = (props) => {
                       {hasCopied ? "Copied" : "Copy"}
                     </Button>
                     <Text minH="100px" pl={2} pr="50px" overflowWrap>
-                      {code}
+                    {Parser(code)}
+
                     </Text>
                   </Box>
                   <Divider></Divider>
@@ -246,7 +248,7 @@ export const SingleCustomPage = (props) => {
                     Description:
                   </Heading>
                   <Text mb={5} minH="150px" p={5}>
-                    {description}
+                    {Parser(description)}
                   </Text>
                 </>
               ) : (
@@ -311,7 +313,7 @@ export const SingleCustomPage = (props) => {
                         <Avatar
                           fontSize="50px"
                           mr={2}
-                          name="Dan Abrahmov"
+                          name=""
                           src={`http://localhost:8000/storage/users/${avatarUser}`}
                         />
                         <Text fontSize="20px" color="myBlue" mb={3}>
@@ -363,7 +365,7 @@ export const SingleCustomPage = (props) => {
                             <Button
                               variantColor="green"
                               mr={2}
-                              w="40%"
+                              w="50%"
                               onClick={() => setIsOpenD(true)}
                             >
                               Remove
@@ -383,7 +385,7 @@ export const SingleCustomPage = (props) => {
                             <Button
                               variantColor="green"
                               mr={2}
-                              w="40%"
+                              w="50%"
                               onClick={handleAdd}
                             >
                               Add

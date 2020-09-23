@@ -17,6 +17,7 @@ import {
   Flex,
   useDisclosure,
 } from "@chakra-ui/core";
+import CKEditor from "ckeditor4-react";
 import { FormNewElement } from "../Element/FormNewElement";
 import { getDefaultCategories, createElementFunc } from "../ElementFunctions";
 import { getCategories, createCategory } from "../Category/CategoryFunctions";
@@ -30,6 +31,8 @@ import { Redirect } from "react-router-dom";
 const NewElementPage = (props) => {
   const rendering = useContext(LogStatusContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [showModalSub, setShowModalSub] = useState(false);
+  const [showModalCat, setShowModalCat] = useState(false);
 
   const { inputChange, responseElement } = props;
   const [title, setTitle] = useState("");
@@ -44,10 +47,8 @@ const NewElementPage = (props) => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [elementRender, setElementRender] = useState(false);
-  const [showModalSub, setShowModalSub] = useState(false);
-  const [showModalCat, setShowModalCat] = useState(false);
   const [showInputCat, setShowInputCat] = useState(false);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("laravel");
   const [subCategory, setSubCategory] = useState("");
   const [renderNewElement, setRenderNewElement] = useState(false);
   const [fromNewElement, setFromNewElement] = useState(true);
@@ -60,6 +61,7 @@ const NewElementPage = (props) => {
       if (res) {
         // console.log(res.data.success.categories[2].sub_categories);
         setCategories(res.data.success.categories);
+        
         // console.log(res.data.success.categories[0].sub_categories[0].title);
         // console.log(res.data.success.categories[0].sub_categories);
         if (res.data.success.categories[0].sub_categories[0]) {
@@ -75,9 +77,10 @@ const NewElementPage = (props) => {
     });
   }, []);
   useEffect(() => {
+    console.log("category in useeffect" + category);
     getCategories().then((res) => {
       if (res) {
-        setCategory(res.data.success.categories[0].title);
+        // setCategory(res.data.success.categories[0].title);
         setCategories(res.data.success.categories);
         res.data.success.categories.map((item, i) => {
           if (item.title === category) {
@@ -97,8 +100,17 @@ const NewElementPage = (props) => {
     // setRenderNewElement(!renderNewElement);
   }, [renderNewElement]);
 
+  const handleChangeDescription = (e) => {
+    setDatas({ ...datas, description: e.editor.getData() });
+    // console.log(datas);
+  };
+  const handleChangeCode = (e) => {
+    setDatas({ ...datas, code: e.editor.getData() });
+    // console.log(datas);
+  };
+
   const handleChange = (e) => {
-    // console.log(e.target.value);
+    // console.log(e);
 
     setdisable(false);
     // console.log(e.target.id);
@@ -134,7 +146,7 @@ const NewElementPage = (props) => {
   //--------------------------------------------------------------------Function Submit
 
   const handleSubmit = (e) => {
-    // console.log(e.target);
+  
     e.preventDefault();
     setLoadCreateElm(true);
     // setTimeout(() => {
@@ -161,7 +173,7 @@ const NewElementPage = (props) => {
         description: datas.description,
         default_category_title: category,
       };
-      console.log(newElement);
+      // console.log(newElement);
       setTimeout(() => {
         createElementFunc(newElement).then((res) => {
           setLoadCreateElm(false);
@@ -169,13 +181,13 @@ const NewElementPage = (props) => {
 
           if (res) {
             if (res.status == 201) {
-              console.log(res);
+              // console.log(res);
               const newCustom = {
                 category: category,
                 subCategory: subCategory,
                 element_id: res.data.success.id,
               };
-              console.log(newCustom);
+              // console.log(newCustom);
               createCustomStarted(newCustom).then((res) => {
                 rendering();
               });
@@ -184,7 +196,7 @@ const NewElementPage = (props) => {
                 title: `Element ${datas.title} created.`,
                 description: "We've created your code element for you.",
                 status: "success",
-                duration: 10000,
+                duration: 5000,
                 isClosable: true,
                 position: "top",
               });
@@ -236,6 +248,9 @@ const NewElementPage = (props) => {
   const getNewSubCategory = (e) => {
     createSubCategory(e).then((res) => {
       // console.log(res);
+      setCategory(e.category);
+      // console.log("categoryyyyyyy" + e.category);
+
       setRenderNewElement(!renderNewElement);
       rendering(true);
       setShowModalSub(false);
@@ -247,7 +262,7 @@ const NewElementPage = (props) => {
     // rendering();
   };
   const closeModal = () => {
-    console.log("modal");
+   
     setShowModalSub(false);
     setShowModalCat(false);
     onClose();
@@ -259,7 +274,7 @@ const NewElementPage = (props) => {
       ) : (
         <Stack
           bg="#eee"
-          h="100vh"
+          // h="100vh"
           //  h="100vh"
           pb="100px"
         >
@@ -371,7 +386,7 @@ const NewElementPage = (props) => {
                       <FormLabel mb={3} htmlFor="code">
                         <Heading fontSize="15px">Code</Heading>
                       </FormLabel>
-                      <Textarea
+                      {/* <Textarea
                         onChange={(e) => handleChange(e)}
                         mb={1}
                         isInvalid={errors.code ? true : false}
@@ -379,7 +394,16 @@ const NewElementPage = (props) => {
                         focusBorderColor="lime"
                         id="code"
                         placeholder="eg. php artisan serv"
-                      ></Textarea>
+                      ></Textarea> */}
+                      <CKEditor
+                        data="<p>Write code element here.</p>"
+                        onChange={(e) => handleChangeCode(e)}
+                        isInvalid="true"
+                        // onChange={(e) => handleChange(e)}
+                        // name="description"
+                        // id="description"
+                        isInvalid={errors.code ? true : false}
+                      />
                       <FormHelperText color="crimson" id="email-helper-text">
                         {errors.code ? errors.code : ""}
                       </FormHelperText>
@@ -390,7 +414,8 @@ const NewElementPage = (props) => {
                         {" "}
                         <Heading fontSize="15px">Description</Heading>
                       </FormLabel>
-                      <Textarea
+                      {/* <Textarea
+                        name="description"
                         onChange={(e) => handleChange(e)}
                         mb={1}
                         isInvalid={errors.description ? true : false}
@@ -398,7 +423,16 @@ const NewElementPage = (props) => {
                         focusBorderColor="lime"
                         id="description"
                         placeholder="eg. About your element"
-                      ></Textarea>
+                      ></Textarea> */}
+
+                      <CKEditor
+                        data="<p>Description of your element</p>"
+                        onChange={(e) => handleChangeDescription(e)}
+                        // onChange={(e) => handleChange(e)}
+                        // name="description"
+                        // id="description"
+                        isInvalid={errors.description ? true : false}
+                      />
                       <FormHelperText color="crimson" id="email-helper-text">
                         {errors.description ? errors.description : ""}
                       </FormHelperText>

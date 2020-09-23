@@ -37,7 +37,7 @@ const Paginations = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
           disabled={currentPage == 1}
           onClick={() => paginate(1)}
         />
-        <Pagination.Prev
+         <Pagination.Prev
           disabled={currentPage == 1}
           onClick={() => paginate(currentPage - 1)}
         />

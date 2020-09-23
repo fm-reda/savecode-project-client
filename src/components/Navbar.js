@@ -6,7 +6,7 @@ import {
   Text,
   Button,
   Link,
-  Avatar,
+  Avatar
 } from "@chakra-ui/core";
 import { NavLink, Redirect } from "react-router-dom";
 import Logo from "./../images/Logo/logo5.png";
@@ -28,7 +28,7 @@ const LinkLogin = ({ children }) => (
         rounded="30px"
         _hover={{ bg: "blue.500", color: " white" }}
       >
-        Log in
+        Sign in
       </Button>
     </NavLink>
     <NavLink to="/register">
@@ -46,7 +46,7 @@ const LinkLogin = ({ children }) => (
   </>
 );
 
-const Navbar = (props) => {
+const Navbar = props => {
   // console.log(props);
 
   // console.log(props.location.pathname);
@@ -57,7 +57,7 @@ const Navbar = (props) => {
   const handleToggle = () => setShow(!show);
   useEffect(() => {
     if (loggedInStatus) {
-      console.log("home");
+      // console.log("home");
       setUrl("home");
     } else {
       setUrl("");
@@ -89,7 +89,9 @@ const Navbar = (props) => {
         fontSize="50px"
         mr={2}
         name="Dan Abrahmov"
-        src={`http://localhost:8000/storage/${localStorage.getItem("avatar")}`}
+        src={`${process.env.REACT_APP_URL}storage/${localStorage.getItem(
+          "avatar"
+        )}`}
       />
       <Text fontSize="15px" fontWeight="500" color="gray.500">
         {localStorage.getItem("name")}
@@ -124,12 +126,12 @@ const Navbar = (props) => {
       align="center"
       justify="space-between"
       wrap="wrap"
-      padding="1.5rem"
+      padding="0.8rem"
       bg="#ffffff"
       color="black"
       pos="fixed"
       w="100%"
-      boxShadow="lg"
+      boxShadow="md"
       {...props}
     >
       <Flex align="center" mr={5}>
@@ -166,7 +168,7 @@ const Navbar = (props) => {
         alignItems="center"
         flexGrow={1}
       >
-        <MenuItems>
+        {/* <MenuItems>
           <NavLink to="/upload">
             <Box
               className={props.location.pathname === "/upload" ? "current" : ""}
@@ -176,8 +178,8 @@ const Navbar = (props) => {
               upload
             </Box>
           </NavLink>
-        </MenuItems>
-        <MenuItems>
+        </MenuItems> */}
+        {/* <MenuItems>
           <NavLink to="/manage">
             <Box
               className={props.location.pathname === "/manage" ? "current" : ""}
@@ -187,8 +189,8 @@ const Navbar = (props) => {
               Manage
             </Box>
           </NavLink>
-        </MenuItems>
-        <MenuItems>
+        </MenuItems> */}
+        {/* <MenuItems>
           <NavLink to="/profile">
             <Box
               className={
@@ -200,8 +202,8 @@ const Navbar = (props) => {
               Profile
             </Box>
           </NavLink>
-        </MenuItems>
-        <MenuItems>
+        </MenuItems> */}
+        {/* <MenuItems>
           <NavLink to="/home">
             <Box
               className={props.location.pathname === "/home" ? "current" : ""}
@@ -211,7 +213,7 @@ const Navbar = (props) => {
               Home
             </Box>
           </NavLink>
-        </MenuItems>
+        </MenuItems> */}
       </Box>
 
       <Box

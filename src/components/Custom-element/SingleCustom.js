@@ -15,7 +15,10 @@ import {
   Alert,
   AlertIcon,
   Spinner,
+  SimpleGrid,
 } from "@chakra-ui/core";
+import Parser from "html-react-parser";
+
 import { useEffect } from "react";
 import { customBycategory } from "./CustomFunctions";
 import "./../../App.css";
@@ -34,6 +37,8 @@ const SingleCustom = (props) => {
 
   // console.log(props);
   const { category, subCategory } = props.match.params;
+  // console.log(category);
+  // console.log(subCategory);
 
   const [customs, setCustoms] = useState([]);
   // const [showCode, setShowCode] = useState(false);
@@ -83,7 +88,7 @@ const SingleCustom = (props) => {
     customBycategory({ category: category, subCategory: subCategory }).then(
       (res) => {
         if (res.status === 200) {
-          console.log(res);
+          // console.log(res);
           setCustoms(res.data.success.customs);
           setRequestStatusCustom(false);
           // console.log(res.data.success.customs);
@@ -132,7 +137,7 @@ const SingleCustom = (props) => {
 
     setDatas({ ...datas, [e.target.id]: e.target.value });
     // inputChange({ ...datas, [e.target.id]: e.target.value });
-    console.log(datas);
+    // console.log(datas);
   };
   const handleEdit = () => {
     setUpdateStatus(true);
@@ -181,7 +186,7 @@ const SingleCustom = (props) => {
           // console.log(res);
           if (res) {
             if (res.status == 200) {
-              console.log(res);
+              // console.log(res);
               setDatas({
                 ...datas,
                 category: res.data.category.title,
@@ -199,7 +204,7 @@ const SingleCustom = (props) => {
               });
               rendering();
               props.history.push(
-                `/${res.data.category.slug}/${res.data.subCategory.slug}`
+                `/custom/${res.data.category.slug}/${res.data.subCategory.slug}`
               );
             } else if (res.status === 401) {
               setShowAlert(true);
@@ -451,20 +456,26 @@ const SingleCustom = (props) => {
                 </Box>
               </Flex>
             ) : (
-              <Stack
-                // justifyContent="center"
-                align="center"
-                // mt="3%"
-                bg="#fff"
-                // minH="100vh"
-                className=""
-                isInline
-                // width="1430px"
-                // w="100%"
-                px={5}
-                py="50px"
-                shouldWrapChildren={true}
-                flexWrap="wrap"
+              // <Stack
+              //   // justifyContent="center"
+              //   align="center"
+              //   // mt="3%"
+              //   bg="#fff"
+              //   // minH="100vh"
+              //   className=""
+              //   isInline
+              //   // width="1430px"
+              //   // w="100%"
+              //   px={5}
+              //   py="50px"
+              //   shouldWrapChildren={true}
+              //   flexWrap="wrap"
+              // >
+              <SimpleGrid
+                mt="3%"
+                // minChildWidth="30%"
+                columns={3}
+                spacing="10px"
               >
                 {customs.map((item, i) => {
                   return (
@@ -475,7 +486,7 @@ const SingleCustom = (props) => {
                         height="230px"
                         shadow="lg"
                         bg="#fff"
-                        width="430px"
+                        // width="430px"
                         // width="30%"
                         mb={5}
                         mx={3}
@@ -509,16 +520,29 @@ const SingleCustom = (props) => {
                                 //  fontSize="20px"
                                 p={2}
                               >
-                                {item.element.description.substring(0, 80) +
+                                {item.element.description
+                                  .replace(/(<([^>]+)>)/gi, "")
+                                  .substring(0, 80) +
                                   (item.element.description.length > 80
                                     ? "..."
                                     : "")}
+
+                                {/* {Parser(
+                                  
+                                )} */}
+                                {/* {Parser(item.element.description).substring(
+                                  0,
+                                  80
+                                ) +
+                                  (item.element.description.length > 80
+                                    ? "..."
+                                    : "")} */}
                               </Text>
                               {/* <Divider borderColor="myBlue"></Divider> */}
                             </Box>
                           </Box>
                           <Flex justifyContent="center">
-                            <Link to={`/custom/single/${item.element_id}`}>
+                            <Link to={`/element/single/${item.element_id}`}>
                               <Button
                                 color="#FFF"
                                 mx="auto"
@@ -538,7 +562,8 @@ const SingleCustom = (props) => {
                     </>
                   );
                 })}
-              </Stack>
+                {/* </Stack> */}
+              </SimpleGrid>
             )}
           </Box>
           {/* **************************************************************************** stack original */}

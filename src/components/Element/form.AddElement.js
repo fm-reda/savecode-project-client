@@ -21,7 +21,7 @@ import { createElementFunc } from "../ElementFunctions";
 export const FormAddElement = (props) => {
   const { handleLogin, handleChange } = props;
   if (handleChange) {
-    console.log("handlechoneg here");
+  
   }
   const [title, setTitle] = useState("");
   const [showAlert, setShowAlert] = useState(false);
@@ -82,7 +82,7 @@ export const FormAddElement = (props) => {
               setTimeout(() => {
                 createElementFunc(newElement).then((res) => {
                   setLoadCreateElm(false);
-                  console.log(res);
+                  // console.log(res);
                   // console.log("test");
                   if (res) {
                     if (res.status == 201) {

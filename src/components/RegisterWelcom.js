@@ -36,7 +36,7 @@ const RegisterWelcom = () => {
           for your App
         </Text>
         <Text textAlign="left" fontSize="30px" my={4} color="#0297e0">
-          Go for next step please.
+          Go next step please.
         </Text>
 
         {/* <Register handleSubmit={handleSubmit} /> */}

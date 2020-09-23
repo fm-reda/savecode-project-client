@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 
 const SearchElement = (props) => {
-  console.log(props.match.params);
+  // console.log(props.match.params);
   //   const { search } = props.match.params;
   const [searchWord, setSearchWord] = useState("");
 

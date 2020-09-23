@@ -15,7 +15,7 @@ export const RegisterPage = (props) => {
   //   const { handleLogin } = props;
   //   console.log(user);
   const handleSubmit = (e, pass) => {
-    console.log("submit");
+    // console.log("submit");
     const user = {
       email: e.success.email,
       password: pass,
@@ -24,7 +24,7 @@ export const RegisterPage = (props) => {
     // console.log(pass);
     login(user).then((res) => {
       // console.log("test");
-      console.log(res);
+      // console.log(res);
       if (res && res.status == 200) {
         // handleLogin(res, pass, "register");
         // console.log(res);
@@ -47,11 +47,11 @@ export const RegisterPage = (props) => {
   return (
     <>
       <Stack>
-        <Box mt="200px" h="100vh">
+        <Box mt="130px" h="100vh">
           <Flex
             w="900px"
             mx="auto"
-            h="650px"
+            // h="500px"
             align="center"
             borderWidth="1px"
             shadow="xl"
@@ -65,7 +65,7 @@ export const RegisterPage = (props) => {
               bgSize="cover"
               bgRepeat="no-repeat"
             >
-              <Box bg="#00000091" zIndex="2" w="100%" h="100%" roundedLeft="lg">
+              <Box bg="#00000091" zIndex="2" w="100%" h="500px" roundedLeft="lg">
                 {" "}
                 <Heading
                   textAlign={["left", "center"]}

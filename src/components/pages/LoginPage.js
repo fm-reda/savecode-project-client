@@ -44,7 +44,7 @@ export const LoginPage = (props) => {
   return (
     <>
       <Stack>
-        <Box mt="200px" h="100vh">
+        <Box mt="130px" h="100vh">
           <Flex
             w="900px"
             mx="auto"

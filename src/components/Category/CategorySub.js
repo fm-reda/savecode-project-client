@@ -136,9 +136,9 @@ export const CategorySub = (props) => {
           </FormHelperText>
         </FormControl> */}
         <FormControl mb={5}>
-          <FormLabel htmlFor="sub category">
+          {/* <FormLabel htmlFor="sub category">
             <Heading fontSize="20px">Sub category</Heading>
-          </FormLabel>
+          </FormLabel> */}
           <Input
             // isDisabled={true}
             isInvalid={errors.subCategory ? true : false}

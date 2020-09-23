@@ -39,6 +39,8 @@ import { SearchElement } from "./components/Element/SearchElement";
 import SearchPage from "./components/Element/SearchPage";
 import { Profile } from "./components/pages/Profile";
 import { GestionCategories } from "./components/pages/GestionCategories";
+import { SingleCategoryPage } from "./components/Category/SingleCategoryPage";
+import { test } from "./components/test";
 // import { searchElement } from "./components/ElementFunctions";
 
 const breakpoints = ["360px", "768px", "1024px", "1440px"];
@@ -56,7 +58,7 @@ export const LogContext = React.createContext();
 export const LogStatusContext = React.createContext();
 export const categoriesContext = React.createContext();
 function App(props) {
-  console.log("apppppppppppppppppppppppppppppppppppppppppppppppppppp");
+
   const [loggedInStatus, setLoggedInStatus] = useState(null);
   // console.log(loggedInStatus);
   // console.log(loggedInStatus);
@@ -69,15 +71,15 @@ function App(props) {
   useEffect(() => {
     if (localStorage.getItem("userToken") && !startedTime) {
       setLoggedInStatus(true);
-      console.log(localStorage);
+      // console.log(localStorage);
       getCategories().then((res) => {
         if (res && res.status == 200) {
           setCategories(res.data);
-          console.log(res);
+          // console.log(res);
           // console.log(res.status);
           // setCategories(res.data.success.categories);
         } else if (res && res.status === 401) {
-          console.log("autorisation");
+          // console.log("autorisation");
           // localStorage.setItem('userToken',"")
           handleLogout();
         } else {
@@ -326,7 +328,7 @@ function App(props) {
                   />
                   <Route
                     exact
-                    path="/:category/:subCategory"
+                    path="/custom/:category/:subCategory"
                     render={(props) => (
                       <SingleCustom
                         {...props}
@@ -336,8 +338,20 @@ function App(props) {
                     )}
                   />
                   <Route
+                    // path={`gestion-categories/:category/:category_id`}
                     exact
-                    path="/custom/single/:id"
+                    path="/gestion-categories/:category/:category_id"
+                    render={(props) => (
+                      <SingleCategoryPage
+                        {...props}
+                        // handleLogin={handleLogin}
+                        // loggedInStatus={loggedInStatus}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/element/single/:id"
                     render={(props) => (
                       <SingleCustomPage
                         {...props}
@@ -373,6 +387,17 @@ function App(props) {
                     path="/gestion-categories"
                     render={(props) => (
                       <GestionCategories
+                        {...props}
+                        // loggedInStatus={loggedInStatus}
+                        // handleLogout={handleLogout}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/test"
+                    render={(props) => (
+                      <test
                         {...props}
                         // loggedInStatus={loggedInStatus}
                         // handleLogout={handleLogout}

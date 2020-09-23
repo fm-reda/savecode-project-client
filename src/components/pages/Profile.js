@@ -47,7 +47,7 @@ export const Profile = (props) => {
   };
   useEffect(() => {
     profile().then((res) => {
-      if (res && (res.status === 200)) {
+      if (res && res.status === 200) {
         setUser(res.data.success);
         setEmail(res.data.success.email);
         setDatas({
@@ -75,7 +75,7 @@ export const Profile = (props) => {
 
     setDatas({ ...datas, [e.target.id]: e.target.value });
     // inputChange({ ...datas, [e.target.id]: e.target.value });
-    console.log(datas);
+    // console.log(datas);
   };
   const handleSubmit = (e) => {
     setLoadUpdate(true);
@@ -91,7 +91,6 @@ export const Profile = (props) => {
         setShowAlert(false);
       }, 5000);
     } else {
-    
       setTimeout(() => {
         updateUser(datas).then((res) => {
           // setLoadCreateElm(false);
@@ -103,7 +102,6 @@ export const Profile = (props) => {
                 email: res.data.user.email,
               });
 
-           
               setUpdateStatus(false);
               setLoadUpdate(false);
 
@@ -125,13 +123,12 @@ export const Profile = (props) => {
               setErrors({ msg: " Error conection " });
             } else if (res.status == 208) {
               setShowAlert(true);
-              console.log("email alreadyy");
+              // console.log("email alreadyy");
               setErrors({ msg: " Email Already exist " });
               setTimeout(() => {
                 setShowAlert(false);
               }, 5000);
             }
-         
           } else {
             // setLoadCreateElm(false);
             // setShowAlert(true);
@@ -146,11 +143,8 @@ export const Profile = (props) => {
   };
   const handleEdit = (e) => {
     setUpdateStatus(true);
-  
-    e.preventDefault();
- 
 
- 
+    e.preventDefault();
   };
   const handleAvatar = (e) => {
     setRequestStatus(true);
@@ -159,7 +153,7 @@ export const Profile = (props) => {
     formData.append("file", e.target.files[0]);
 
     uploadAvatar(formData).then((res) => {
-      console.log(res);
+      // console.log(res);
       localStorage.setItem("avatar", res.data.user.avatar);
       //   setrender(!render);
       rendering();

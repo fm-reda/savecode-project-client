@@ -29,7 +29,7 @@ export const FormNewElement = (props) => {
   const [errors, setErrors] = useState([]);
   const [disable, setdisable] = useState(false);
   const [loadCreateElm, setLoadCreateElm] = useState(false);
-  const [datas, setDatas] = useState({ categories: 2 });
+  const [datas, setDatas] = useState({ categories: 1 });
   const [defaultCategories, setDefaultCategories] = useState([]);
   const [disableTitle, setDisableTitle] = useState(false);
   const toast = useToast();
@@ -38,7 +38,7 @@ export const FormNewElement = (props) => {
   useEffect(() => {
     getDefaultCategories().then((res) => {
       if (!res) {
-        console.log("error");
+        // console.log("error");
       } else {
         setDefaultCategories(res.data.success);
       }
@@ -93,7 +93,7 @@ export const FormNewElement = (props) => {
       setTimeout(() => {
         createElementFunc(newElement).then((res) => {
           setLoadCreateElm(false);
-          console.log(res);
+          // console.log(res);
 
           if (res) {
             if (res.status == 201) {
